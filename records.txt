@@ -28,7 +28,16 @@ http://qgroundcontrol.org/dev/build_source
 git add file-name
 git commit -m "commit message"
 git push
+
 git rm file-name
+git commit -m "remove a file"
+git push
+
+# modify file-1
+git commit file-1 -m "modify this file"
+git push
+
+
 
 
 
