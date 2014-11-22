@@ -22,3 +22,13 @@ Ctrl+\  and C and quit
 
 Qgroundcontrol:
 http://qgroundcontrol.org/dev/build_source
+
+
+======================== GitHub ====================
+git add file-name
+git commit -m "commit message"
+git push
+git rm file-name
+
+
+
