@@ -2,7 +2,7 @@
 px4 quick start:
 https://pixhawk.org/dev/px4_quickstart
 
-
+======================== use NuttShell ============
 NuttShell (NSH) via Seiral using the kermit:
 
 ~/.kermrc
@@ -20,8 +20,48 @@ ls free cd ...
 [quit]
 Ctrl+\  and C and quit
 
+======================= Qground control =============
+Ref: https://github.com/mavlink/qgroundcontrol/blob/master/README.md
+
+
 Qgroundcontrol:
 http://qgroundcontrol.org/dev/build_source
+https://github.com/mavlink/qgroundcontrol.git
+
+installation instruction:
+https://github.com/mavlink/qgroundcontrol/blob/master/README.md
+
+git clone git://github.com/mavlink/qgroundcontrol.git 
+cd qgroundcontrol 
+git submodule init 
+git submodule update
+
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test 
+sudo apt-add-repository ppa:ubuntu-sdk-team/ppa 
+sudo apt-get update
+
+
+Error: libqt5serialport5-dev
+
+http://askubuntu.com/questions/279421/how-can-i-install-qt-5-x-on-12-04-ltsr
+
+Install Qt 5.2 on Ubuntu 13.10
+This article on Qt official site is old. Today, I try to install Qt 5.2.0 on my Ubuntu 13.10. Below is my steps:
+
+1. Download Qt 5.2.0 for Linux
+
+http://qt-project.org/downloads
+
+    wget http://download.qt-project.org/official_releases/qt/5.2/5.2.0/qt-linux-opensource-5.2.0-x86_64-offline.run
+
+
+2.  Give the downloaded file execute permission, then execute it
+
+    chmod +x ./qt-linux-opensource-5.2.0-x86_64-offline.run
+    ./qt-linux-opensource-5.2.0-x86_64-offline.run
+
+You will see one setup dialog, following the setup wizard.
+
 
 
 ======================== GitHub ====================
