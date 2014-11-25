@@ -1,24 +1,5 @@
-======================== px4 ======================
-px4 quick start:
-https://pixhawk.org/dev/px4_quickstart
 
-======================== use NuttShell ============
-NuttShell (NSH) via Seiral using the kermit:
 
-~/.kermrc
-
-get the serial port device information:
-ls /dev/ttyU*     
-
-kermit
-connect
-enter
-
-[command]
-ls free cd ...
-
-[quit]
-Ctrl+\  and C and quit
 
 ======================= Qground control =============
 Ref: https://github.com/mavlink/qgroundcontrol/blob/master/README.md
@@ -64,7 +45,7 @@ You will see one setup dialog, following the setup wizard.
 
 
 
-======================== GitHub ====================
+=================== GitHub Basics ====================
 git add file-name
 git commit -m "commit message"
 git push
@@ -76,6 +57,169 @@ git push
 # modify file-1
 git commit file-1 -m "modify this file"
 git push
+
+
+
+---------------------------------------------------------------
+--------------------- Setting up your laptop ------------------
+---------------------------------------------------------------
+
+1. install Ubuntu
+sudo apt-get update
+sudo apt-get upgrade
+
+2. basic setting
+input method
+language support
+ibus-setup
+ 
+3. set up the bash
+Ref: https://help.ubuntu.com/community/CustomizingBashPrompt
+gedit .bashrc
+uncomment:
+#force_color_prompt=yes 
+
+4. install logitech unifying
+sudo add-apt-repository ppa:daniel.pavel/solaar
+sudo apt-get update
+sudo apt-get install solaar
+
+5. install　ROS
+
+
+6. install vim install mv-camera-driver
+reboot
+test via wxPropView
+install ROS-camera-driver
+copy camera calibration file
+test image_view
+test stereo_view
+
+7. download sandbox
+git clone URL
+./update --devel
+
+
+8. follow Ellen's note
+install IPC
+install Matlab
+
+
+9. install gperftools
+
+10. install sublime-text 
+
+For Sublime-Text-3:
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+sudo apt-get update
+sudo apt-get install sublime-text-installer
+
+11. install others
+install tex-live
+install tex-maker
+install skype
+install dropbox
+install everpad
+install Gparted
+install partitionmanager
+
+
+
+
+
+
+
+
+
+===================================================
+=============== px4 WiKi ==========================
+===================================================
+px4 quick start:
+https://pixhawk.org/dev/px4_quickstart
+
+============== use NuttShell ======================
+Ref: https://pixhawk.org/users/serial_connection
+NuttShell (NSH) via Seiral using the kermit:
+
+~/.kermrc
+ls /dev/ttyU*     
+sudo kermit
+connect
+enter
+
+[command]
+ls free cd ...
+
+[quit]
+Ctrl+\  and C and quit
+
+============== build and flash the firmware =============
+
+cd ~/src
+git clone https://github.com/PX4/Firmware
+cd Firmware
+---------------- GitLab ------------------------------
+git clone git@nmichael.frc.ri.cmu.edu:px4/px4_patches.git
+git checkout -b cmu_develop `cat px4_patches/px4_master_hash`
+git apply --ignore-space-change --ignore-whitespace px4_patches/px4_master_to_cmu_develop_version.diff
+rm -fr src/modules/cmu_rc_command src/modules/cmu_pwm_command src/modules/cmu_attitude_estimator_so3 src/modules/cmu_voltage_monitor
+git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_rc_command.git src/modules/cmu_rc_command
+git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_voltage_monitor.git src/modules/cmu_voltage_monitor
+git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_attitude_estimator_so3.git src/modules/cmu_attitude_estimator_so3
+git clone https://github.com/PX4/NuttX
+-------------------------------------------------------
+
+git submodule init
+git submodule update
+
+------------------- GitLab ----------------------------
+vim makefiles/config_px4fmu-v1_default.mk
+
+change line 129:
+From:
+MODULES                += modules/cmu_pwm_command
+To:
+#MODULES                += modules/cmu_pwm_command
+-------------------------------------------------------
+
+cd ~/src/Firmware
+make distclean
+make archives
+make
+sudo usermod -a -G dialout $USER
+Log out and log in in linux for changes to take effect. (Very Important!)
+make upload px4fmu-v1_default
+
+
+
+The result should be:
+
+working in [...]/Firmware/Images
+Attempting to flash PX4FMU board via USB
+Loaded firmware for 5,0, waiting for the bootloader...
+
+When you see “waiting for the bootloader” press the “reset” button on the side of the PX4FMU. If the board is now connected & reset, the new firmware will be flashed.
+
+Found board 5,0 on /dev/tty[...]
+erase...
+program...
+verify...
+done, rebooting.
+
+=============== Troubleshooting ======================================
+Board not found (Affects mostly Ubuntu 12.10 users)
+In case the board is not found, make sure you remove the modem-manager by:
+sudo apt-get remove modemmanager
+
+Permission Denied
+If you have no permissions for /dev/ttyACM0 , make sure the user is in group dialout (as described above).
+
+To find out the device name (if not /dev/ttyACM0), do a
+ls /dev/tty*
+when the bootloader is loading (first 5 seconds after reset).
+
+
+
 
 
 
