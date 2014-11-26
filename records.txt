@@ -141,6 +141,13 @@ https://pixhawk.org/dev/px4_quickstart
 Ref: https://pixhawk.org/users/serial_connection
 NuttShell (NSH) via Seiral using the kermit:
 
+sudo apt-get install ckermit
+Set your default settings to the correct settings for px4 using the follow code:
+echo "SET LINE /dev/ttyUSB0
+SET SPEED 57600
+SET CARRIER-WATCH OFF
+SET FLOW-CONTROL NONE" > ~/.kermrc
+
 ~/.kermrc
 ls /dev/ttyU*     
 sudo kermit
@@ -217,6 +224,23 @@ If you have no permissions for /dev/ttyACM0 , make sure the user is in group dia
 To find out the device name (if not /dev/ttyACM0), do a
 ls /dev/tty*
 when the bootloader is loading (first 5 seconds after reset).
+
+=============== odroid cmu_mavlink ==============================
+odroid sandbox update failed like this:
+[ 12%] Performing download step (git clone) for 'mavlink'
+Cloning into 'mavlink'...
+fatal: unable to access 'https://github.com/mavlink/mavlink.git/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+solution:
+git config --global http.sslverify false
+Ref: https://github.com/gitlabhq/gitlabhq/issues/4272#issuecomment-22074932
+
+after the update, 
+catkin_make the dry;
+catkin_make the wet;
+
+vim cmu_mavlink/cmu_mavlink_only.launch
+baudrate:230400
+serialport:/dev/ttyUSB0
 
 
 
