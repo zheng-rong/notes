@@ -242,6 +242,36 @@ vim cmu_mavlink/cmu_mavlink_only.launch
 baudrate:230400
 serialport:/dev/ttyUSB0
 
+============= px4 serial port mapping =============
+ttyS (definition in the px4/microSD/etc/rc.txt)
+HW (defined in the px4 hardware user manual)
+
+ttyS0 <==> HW-UART1
+ttyS1 <==> HW-UART2
+ttyS2 <==> HW-UART5
+ttyS3 <==> HW-UART6
+
+UART_1 connection:
+pin3--black--ground
+pin7--yellow
+pin8--orange
+
+roslaunch cmu_mavlink cmu_mavlink_only.launch
+rostopic list
+rostopic hz /mavlink/att
+rostopic echo /mavlink/att
+
+==================== C++ CMake ====================
+cmake -G "Unix Makefiles" ..
+cmake ..
+make
+./xxx(executable)
+
+
+
+
+
+
 
 
 
