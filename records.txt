@@ -58,6 +58,9 @@ git push
 git commit file-1 -m "modify this file"
 git push
 
+git add file-names
+git commit -a -m "creat"
+git push
 
 
 ---------------------------------------------------------------
