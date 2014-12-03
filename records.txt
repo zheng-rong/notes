@@ -126,6 +126,26 @@ install everpad
 install Gparted
 install partitionmanager
 
+12. setup printer
+
+If you have an SCS account there are several ways to print:
+
+    The prefered method is here.
+    In linux (Ubuntu):
+          Go to System -> Administration -> Printing
+          Click 'Add'
+          Expand 'Network Printer'
+          Select 'LPD/LPR Host or Printer'
+          The information that changes are the Host and Queue fields. Queue will always refer to the name of the printer (see table below).
+    You can install a printer as a local printer using a TCP/IP port (see below for a list of printer IP's). This should work from a wired or wireless machine with Windows or Linux for **some** printers.
+    The last way works in Windows with many HP printers and is simple to setup. For this method use the IP's from below and install the HP universal print driver which can be Found Here
+    Printer	IP	FQDN	Model	Location	Host
+    boulder	128.2.177.195	boulder.prt.cs.cmu.edu	HP Color Laserjet 5550N	NSH 1100 (near FRC mailboxes)	cyan.srv.cs.cmu.edu
+    lightning	128.2.177.194	lightning.prt.cs.cmu.edu	HP Laserjet 9000N	NSH 1200 (near e-lab)	cyan.srv.cs.cmu.edu
+    mulch	128.2.177.211	mulch.prt.cs.cmu.edu	HP Laserjet 4350n	NSH 2200 (near FRC grad student offices and water cooler)	cyan.srv.cs.cmu.edu
+    prismCOLOR	128.2.177.208	prismcolor.prt.cs.cmu.edu	HP Color Laserjet 5550DN	NSH 1509 (near NSH 1st floor copy room and RoboLounge)	cyan.srv.cs.cmu.edu
+
+================================
 
 
 
@@ -133,6 +153,9 @@ install partitionmanager
 
 
 
+
+==========================================================================================
+==========================================================================================
 
 ===================================================
 =============== px4 WiKi ==========================
@@ -263,14 +286,75 @@ roslaunch cmu_mavlink cmu_mavlink_only.launch
 rostopic list
 rostopic hz /mavlink/att
 rostopic echo /mavlink/att
-
+==========================================================================================
+==========================================================================================
 ==================== C++ CMake ====================
 cmake -G "Unix Makefiles" ..
 cmake ..
 make
 ./xxx(executable)
 
+====================== ssh ========================
+ls -al ~/.ssh
+ssh-keygen -t rsa -C "your_email@example.com"
+# start the ssh-agent in the background
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
 
+
+
+
+
+
+
+
+
+
+
+============================================
+Matlab NOTE!
+
+Be careful when trying to print out some information, which can greatly slow the processing speed.
+
+
+============== Feedback control using Simulation via Matlab and IPC ===========
+1. install IPC 
+NOTE:
+Do NOT add "LINUX*" directory in the destination directory
+when copy files from ipc 
+ipc3.9.*/{bin/Linux*, lib/Linux*, include} 
+to 
+/opt/ipc/{bin,lib,include} 
+
+2. install Matlab
+3. download cmu_quad_matlab to sandbox
+git clone
+./update  --devel
+4. compile the packages
+solve the problem in vicon-mocap
+goto: cmu-quad-matlab/dry/src/vicon_mocap/libvicon_driver/
+Change the following line:
+Line 24:
+from:
+set(USE_OLD_YAML_CPP_API TRUE CACHE BOOL "Use the old YAML-CPP API")
+to:
+set(USE_OLD_YAML_CPP_API FALSE CACHE BOOL "Use the old YAML-CPP API")
+
+catkin_make wet, it depends on some packages in dry, so before the compile we should source dry directory. (problem "can't find mavlink".)
+======
+manually source:
+firstly souce dry, then source wet
+ 
+5. . workon
+try to make workon work correctly:
+add --extend on the second source line
+6. let ROS talk to IPC-bridge
+/opt/ipc/bin/central –u
+7. run Matlab.simple_io_test.m
+cd /cmu_quad_matlab/wet/src/matlab_quadrotor_example/matlab
+8. run launch file
+cd cmu_quad_matlab/wet/src/matlab_quadrotor_example/launch
+roslaunch matlab_quadrotor_example simulation_test.launch
 
 
 
