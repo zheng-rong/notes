@@ -126,6 +126,12 @@ install everpad
 install Gparted
 install partitionmanager
 
+install retext
+Markdown 是一种轻量级标记语言。
+
+install sublime text
+
+
 12. setup printer
 
 If you have an SCS account there are several ways to print:
@@ -146,6 +152,20 @@ If you have an SCS account there are several ways to print:
     prismCOLOR	128.2.177.208	prismcolor.prt.cs.cmu.edu	HP Color Laserjet 5550DN	NSH 1509 (near NSH 1st floor copy room and RoboLounge)	cyan.srv.cs.cmu.edu
 
 ================================
+13. system monitor
+$ sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+$ sudo apt-get update
+$ sudo apt-get install indicator-sysmonitor
+Optional, to remove indicator sysmonitor, do:
+$ sudo apt-get remove indicator-sysmonitor
+
+system load indicator
+
+
+http://www.noobslab.com/2014/08/useful-panel-indicators-collection-for.html
+http://en.wikipedia.org/wiki/Damping
+http://en.wikipedia.org/wiki/Damping_ratio
+http://hyperphysics.phy-astr.gsu.edu/hbase/mi.html
 
 
 
@@ -302,6 +322,41 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 
 
+=================================================
+set up in vim
+
+
+To define this on a permanent basis for the current user, create (or edit) the .vimrc file:
+
+$ vim ~/.vimrc
+
+Then, paste the configuration below into the file. Once vim is restarted, the tab settings will apply.
+
+set tabstop=4       " The width of a TAB is set to 4.
+                    " Still it is a \t. It is just that
+                    " Vim will interpret it to be having
+                    " a width of 4.
+
+set shiftwidth=4    " Indents will have a width of 4
+
+set softtabstop=4   " Sets the number of columns for a TAB
+
+set expandtab       " Expand TABs to spaces
+" set nu
+syntax on
+set autoindent      " auto indent
+
+
+
+================================================
+update time and date using command line from Internet
+
+
+You can do so with sudo ntpdate time.nist.gov other servers include time.windows.com, etc.
+
+http://www.pool.ntp.org/ lists time servers around the world.
+
+
 
 
 
@@ -356,6 +411,10 @@ cd /cmu_quad_matlab/wet/src/matlab_quadrotor_example/matlab
 cd cmu_quad_matlab/wet/src/matlab_quadrotor_example/launch
 roslaunch matlab_quadrotor_example simulation_test.launch
 
+============ trouble shooting =============
+rostopic echo  /test/pd_cmd
+ERROR: Cannot load message class for [quadrotor_msgs/PDCommand]. Are your messages built?
+solution: source the directory using . workon
 
 
 
