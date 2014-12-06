@@ -1,5 +1,7 @@
 #<center> Set up your laptop in Ubuntu
-<center>*Arkin Dec 5 2014*
+<center><big>*Zheng Rong  @ Dec. 5 2014*</big>
+
+<center>![text](logo.gif)
 
 ---------------------------------------------
 
@@ -177,21 +179,8 @@ to
 
 ###install Matlab
 
-----------------------------------------------
 
-## install mv-camera-driver
-reboot
-test via wxPropView
-install ROS-camera-driver
-copy camera calibration file
-test image_view
-test stereo_view
 
-----------------------------------------------
-
-## download sandbox
-git clone URL
-./update --devel
 
 
 
@@ -487,8 +476,516 @@ solution: source the directory using . workon in current terminal
 
 ----------------------------------------------------
 
+##Install mvBlueFOX camera driver on PC or Odroid
+
+[Matrix Vision mvBlueFOX Ref](http://www.matrix-vision.com/manuals/mvBlueFOX/mvBF_page_quickstart.html)
+
+[Driver for odroid](http://www.matrix-vision.com/industries-reader/embedded-boards-mvbluefox-drivers-for-odroid-raspberry-pi-and-wandboard.html)
+
+[Driver for Linux](http://www.matrix-vision.com/latest-drivers.html)
+
+#### install [expat-2.1.0](http://sourceforge.net/projects/expat/)
+    
+    mkdir build                 in the expat-2.1.0 project folder
+    cd build
+    cmake ..                    
+    make
+    sudo make install
+
+    ./configure
+    make
+    sudo make install
+
+#### install Linux camera driver mvBlueFOX-xxxxxxxxx
+
+download 2 files and run the following command:
+    chmod a+x install_mvBlueFOX.sh 
+    ./install_mvBlueFOX.sh 
+
+#### test using wxPropView
+reboot  
+test via wxPropView 
+
+-----------------------------------------------------------------
+## install ROS-camera driver matrixvision_camera on PC
+
+1. git clone matrixvision_camera from ethz Github
+    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/
+2. rosmake
+3. add files and modify some code from Ke's matrixvision Gitlab
+4. rosmake
+5. modify the launch file in mv_camera (camera ID)
+6. roslaunch launchfile-name
+7. rostopic list make sure the stereo camera are publishing:
+    
+    /stereo/left/image_raw
+    /stereo/left/camera_info
+    /stereo/right/image_raw
+    /stereo/right/camera_info
+
+8. rostopic hz topic-name
+9. rosrun image_view image_view image:=/stereo/left/image_raw
+
+>Difference between Ke and ethz:
+1. copy from Ke to ethz:
+    mv_camera/  
+    {  
+        CMakeLists.txt  
+        launch  
+        Makefile    
+        manifest.xml    
+    }   
+    mv_camera/src   
+    {   
+        modify_camera_settings.cpp  
+        stereo_time_reporter.cpp  
+    }     
+2. comment some code:
+    mv_camera/src/modify_camera_settings.cpp    
+    comment the last 4 sessions(set master and slave mode)
+
+copy camera calibration file
+test image_view
+test stereo_view
+
+##Install ROS-camera driver on Odroid
+Before this step, we should install mvBlueFOX driver firstly.   
+1. git clone matrixvision_camera from ethz Github
+    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/     
+2. modify the make.sh file in the mv_driver folder   ---Arkin   see attached    
+3. copy 4 folder from mv_driver/mvIMPACT_acquire to /opt/ros/indigo/include 
+    DriverBase, mvDeviceManager, mvIMPACT_CPP, mvPropHandling
+    sudo cp -r source-directory dest-directory  
+*Note: the folder mv_driver/mvIMPACT_acquire will not exist until we rosmake it in directory matrixviaion_camera, but this rosmake will have some error.*   
+4. rosmake it again, then it passed.    
+5. modify the code according to Ke's code component 
+6. rosmake  
+7. install ros-indigo-image-view package    
+8. modify the launch file in the mv_camera for the two cameras UID  
+9. roslaunch launchfile     
+10. rostopic list       
+11. rosrun image_view image_view image:=/stereo/left/image_raw  
+
+>Difference between Ke and ethz:
+1. copy from Ke to ethz:
+    mv_camera/  
+    {  
+        CMakeLists.txt  
+        launch  
+        Makefile    
+        manifest.xml    
+    }   
+    mv_camera/src   
+    {   
+        modify_camera_settings.cpp  
+        stereo_time_reporter.cpp  
+    }     
+2. comment some code:
+    mv_camera/src/modify_camera_settings.cpp    
+    comment the last 4 sessions(set master and slave mode)
+    
+*make.sh*    
+
+        #!/bin/bash   
+        #This make.sh is for Odroid armv7l. Zheng Rong Nov 10 2014
+        
+        set -e
+        
+        PACKAGE_DIR=$(rospack find mv_driver)
+        echo "### downloading and unpacking drivers to" $PACKAGE_DIR "###"
+        
+        BLUEFOX_URL="http://www.matrix-vision.com/industries-reader/embedded-boards-mvbluefox-drivers-for-odroid-raspberry-pi-and-wandboard.html?file=tl_files/mv11/support/mvIMPACT_Acquire_Embedded"
+        
+        API=mvIMPACT_acquire
+        
+        LINKER_PATHS=$PACKAGE_DIR/linker_paths
+        COMPILER_FLAGS=$PACKAGE_DIR/compile_flags
+        
+        BLUEFOX_NAME=mvBlueFOX
+        TARGET=armv7l
+        BLUEFOX_VERSION=2.6.3
+        BLUEFOX_TARNAME=$BLUEFOX_NAME-$TARGET-$BLUEFOX_VERSION
+        
+        # cleanup first
+        rm -rf $BLUEFOX_NAME* $API* tmp $LINKER_PATHS $COMPILER_FLAGS
+        rm -rf download
+        #### download driver archives ####
+        mkdir -p download
+        cd download
+        wget -O $BLUEFOX_TARNAME.tgz -nc $BLUEFOX_URL/$BLUEFOX_TARNAME.tgz
+        
+        #### bluefox runtime ####
+        # unpack
+        mkdir -p $PACKAGE_DIR/tmp/$BLUEFOX_NAME
+        cd $PACKAGE_DIR/tmp/$BLUEFOX_NAME
+        tar -xf $PACKAGE_DIR/download/$BLUEFOX_TARNAME.tgz --overwrite
+        
+        # copy blueFOX runtime libs
+        mkdir -p $PACKAGE_DIR/$BLUEFOX_NAME"_runtime/lib/"$TARGET
+        cp $PACKAGE_DIR/tmp/$BLUEFOX_NAME/$API-$TARGET-$BLUEFOX_VERSION/lib/$TARGET/libmvBlueFOX.* $PACKAGE_DIR/$BLUEFOX_NAME"_runtime/lib/"$TARGET
+        
+        # copy udev rule
+        mkdir -p $PACKAGE_DIR/$BLUEFOX_NAME"_scripts"
+        cp $PACKAGE_DIR/tmp/$BLUEFOX_NAME/$API-$TARGET-$BLUEFOX_VERSION/Scripts/51-mvbf.rules $PACKAGE_DIR/$BLUEFOX_NAME"_scripts"
+        
+        echo -L$PACKAGE_DIR/$BLUEFOX_NAME"_runtime/lib/"$TARGET >> $LINKER_PATHS
+        
+        ##### mvIMPACT (device independent stuff) #####===============  Arkin --Nov 11 2014
+        cd $PACKAGE_DIR
+        mv $PACKAGE_DIR/tmp/$BLUEFOX_NAME/$API-$TARGET-$BLUEFOX_VERSION $PACKAGE_DIR/$API
+        echo -L$PACKAGE_DIR/$API/lib/$TARGET >> $LINKER_PATHS
+        echo -I$PACKAGE_DIR/$API >> $COMPILER_FLAGS
+            
+        #### clean up ####
+        rm -rf $PACKAGE_DIR/tmp
+        
+        #### note down that this is done ####
+        touch $PACKAGE_DIR/downloadandinstall
+
+-----------------------------------------------------------------------
+## Sychronization of the stereo camera
+
+Here are the connections we have for stereo cameras 
+
+The pin number follows the [link](http://www.matrix-vision.com/manuals/mvBlueFOX/mvBF_page_tech.html#mvBF_subsection_single)
+
+Left: Master        
+Right: Slave
+
+L7 -> L10
+L9 -> R12
+L8 -> R8 & R11
+
+L: left, R:right (left camera is the one on your left when you stand behind the stereo camera pairs).
+
+In the camera driver mv_camera:
+The cpp file "modify_camera_settings" should contain the stereo camera sync code(master and slave).
+
+-----------------------------------------------------------------------
+## using Stereo Image proc & Image proc
+Packages: Image view, Stereo image proc, Image proc
+
+After running the camera driver (mv_stereo.launch, in matrixvision_camera/mv_camera):
+
+<center>![](stereo_image_proc.png)
+
+1. rostopic list make sure the stereo camera are publishing:
+   
+    /stereo/left/image_raw
+    /stereo/left/camera_info
+    /stereo/right/image_raw
+    /stereo/right/camera_info
+
+2. start stereo_image_proc in another terminal:     
+    ROS_NAMESPACE=stereo rosrun stereo_image_proc stereo_image_proc _approximate_sync:=True    
+3. rostopic list
+4. rostopic hz topic-name
+5. see the iamge:       
+    *image_view has 3 nodes: image_view, stereo_view, disparity_view*      
+        
+
+    rosrun image_view image_view image:=/stereo/left/image_raw  
+    rosrun image_view stereo_view stereo:=/stereo image:=image_raw _approximate_sync:=True      
+    rosrun image_view stereo_view stereo:=/stereo image:=image_rect _approximate_sync:=True     
+    rosrun image_view disparity_view image:=/stereo/disparity       
+
+Image_proc is for mono camera, and has 1 node: image_proc.
+
+function: remove camera distortion, convert format
+
+<center>![](image_proc.png)
+
+make sure the camera driver is running.
+
+    rostopic list | grep image_raw
+    ROS_NAMESPACE=stereo/left rosrun image_proc image_proc
+    rosrun image_view image_view image:=stereo/left/image_raw
+    rosrun image_view image_view image:=stereo/left/image_rect
+----------------------------------------------------------------
+## Calibration for Stereo /Mono Camera 
+
+1. make sure the installation of camera_calibration             
+    rosdep install camera_calibration
+    rosmake camera_calibration
+    
+2. run the mv_stereo to start the stereo camera           
+    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/
+    roslaunch mv_camera.launch
+    
+3. check the topic      
+    rostopic list
+    
+4. run the calibration node     
+
+    *Stereo*  
+          
+    rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.152 --approximate=0.01 right:=/stereo/right/image_raw left:=/stereo/left/image_raw right_camera:=/stereo/right left_camera:=/stereo/left
+    
+    *Mono*   
+       
+    rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.152 image:=/stereo/left/image_raw camera:=/stereo/left     
+         
+5. camera check
+
+    rosrun camera_calibration cameracheck.py --size 8x6 stereo:=/wide_stereo image:=image_rect
+    
+    rosrun camera_calibration cameracheck.py --size 8x6 monocular:=/forearm image:=image_rect
+
+6. check the stereo camera synchronization      
+    rosrun mv_camera stereo_time_reporter
+    
+-----------------------------------------------------------
+## Record dataset as bagfile for SVO
+
+In the SVO package launch folder, there are several launch files:
+
+    svo_bag.launch              *use dataset to test SVO algorithm and output results(bagfile)*
+    svo_imu_stereo_bag.launch   *record dataset as bagfile*
+    svo_imu_stereo.launch       *camera driver for stereo configuration*
+    svo_online.launch           *online svo*
+    svo_stereo_proc.launch      *start stereo image processing*
+
+1. run the camera driver
+
+        roslaunch svo_imu_stereo.launch
+        The node "cam_configurer" should be under the group with namespace "vehicle".
+        In the matrixvision_camera/mv_camera/src/, the cpp file "modify_camera_settings" should contain the stereo camera sync code(master and slave).
+        in the stereo_visual_odometry/wet/src/stereo_visual_odometry/config folder, there should be mv_camera-ID.yaml.
+   
+2. run stereo image proc
+
+        roslaunch svo_stereo_proc.launch
+     
+3. run recording process
+
+        roslaunch svo_imu_stereo_bag.launch bagfile:=pc_svo_nov17_6
+     
+You can specify the folder path of the bagfile output.
+
+In the stereo_visual_odometry/wet/src/stereo_visual_odometry/config/oscar_camera_parameters.yaml, the projection matrices should be modified to match with the camera calibration result.
+
+In the svo/src/visualOdometry.cpp  choose if dispaly the visual_feature_tracking
+
+--------------------------------------------------------
+
+## Run sandbox/stereo_visual_odometry using bag-file
+
+1. mkdir sandbox
+
+        cd sandbox  
+        git clone URL       
+        git branch -a       
+        git checkout -d branchname      
+        git branch      
+        git diff        
+        git fetch       
+        git pull        
+        git status      
+        cd stereo_visual_odometry       
+        ./update --devel        
+
+2. set ROS_PACKAGE_PATH
+
+    cd wet      
+    source devel/setup.bash     
+    env | grep ROS      
+    
+    *bug solution*
+     
+    unset ROS_PACKAGE_PATH      
+    remove the build folder     
+    rebuild     
+    
+    *other methods*
+      
+    . workon      
+    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/sandbox/svo/wet       
+    
+3. make     
+    catkin_make -DCMAKE_BUILD_TYPE=Release
+
+4. roslaunch        
+    modify the launch file to fit for the bag file      
+    sandbox/svo/wet/src/svo/launch/     
+    roslaunch launch_name   
+        
+5. rostopic
+    rostopic list       
+    rostopic hz topic_name      
+    rostopic echo topic_name      
+      
+6. rosnode
+    rosbag info bag_name        
+    rosnode list        
+    rosnode info node_name      
+    
+7. rosrun
+    rosrun rviz rviz -d xxx.rviz   
+    
+-------------------------------------------------
+## use the CPU_monitor to get CPU usage information on Odroid
+
+1. download the package cpu_monitor and put it in the package collection folder
+    cd sandbox/svo/wet/src
+    git clone URL
+    
+2. install needed glibtop library   
+    sudo apt-get install libglib2.0-dev libgtop2-dev
+    
+3. make it  
+    catkin_make --pkg cpu_monitor     #just make the specified package
+    
+4. modify the launch file
+
+5. roslaunch svo_bag.launch output:=... input:=...  
+
+    rosbag info test_2014-11-14-11-15-33.bag
+    rosbag play test_2014-11-14-11-15-33.bag
+    rostopic echo /oscar/cpu_monitor/cpu_status
+    
+6. use Matlab slam_test_suite to plot the CPU usage.
+
+----------------------------------------------------
+## use the google performance tool <u>gperftools</u>
+
+1. download 
+    [gperftools-2.1.tar.gz](https://code.google.com/p/gperftools/downloads/list)
+
+2. install [libunwind](http://download.savannah.gnu.org/releases/libunwind/libunwind-0.99-beta.tar.gz)
+
+    ./configure
+
+    Error when making libunwind:        
+    /usr/include/bits/setjmp2.h:26: error: ‘longjmp’ aliased to undefined symbol ‘_longjmp’
+
+    Solution: modify the makefile       
+    libunwind-1.0.1/src/Makefile        
+    add U_FORTIFY_SOURCE for the CPPFLAGS on line 608.      
+
+    before: CPPFLAGS =  -D_GNU_SOURCE -DNDEBUG      
+    after:  CPPFLAGS =  -D_GNU_SOURCE -DNDEBUG -U_FORTIFY_SOURCE
+
+    [Ref](http://blog.csdn.net/littletigerat/article/details/7738731)
+
+3. install [gperftools](https://code.google.com/p/gperftools/source/browse/INSTALL)
+
+    install command sequence:       
+    ./configure     
+    make        
+    make install        
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib        
+
+4. [use](http://gperftools.googlecode.com/svn/trunk/doc/cpuprofile.html)
+
+#### Example from Nate :-)
+
+1. In CMakeLists, add link flags "profiler" and "tcmalloc"
+
+        target_link_libraries(${PROJECT_NAME) ${catkin_LIBRARIES} ... profiler tcmalloc}
+
+2. In the entry point of your programme(i.e. stereo_visual_odometry_bag_process.cc) 
+    
+        #include <gperftools/profiler.h>     
+
+3. Wrap the entire node with: (should use the top level cc file)
+
+        int main(int argc, char** argv)
+        {
+            ProfilerStart("output_file_name");
+            ....
+            ProfilerStop();
+            return EXIT_SUCCESS;
+        }
+
+4. Recompile with flag -DCPUPROFILE_FREQUENCY=1000
+
+        catkin_make -DCPUPROFILE_FREQUENCY=1000
+
+5. roslaunch the launch file and wait for completion
+
+6. you will find the output_file_name.prof
+
+        cd ~/.ros/
+
+7. text output of the CPU analysis result
+
+        pprof --text ~/ros_code/sandbox/stereo_visual_odometry/wet/devel/lib/stereo_visual_odometry/stereo_visual_odometry_bag_process output_file_name.prof
+
+8. graphical output you can do
+
+        pprof --gv ~/ros_code/sandbox/stereo_visual_odometry/wet/devel/lib/stereo_visual_odometry/stereo_visual_odometry_bag_process output_file_name.prof  
+        
+*Add link flags*
+rosbuild_add_link_flags()
+http://wiki.ros.org/rosbuild/CMakeLists/Examples
+
+rosbuild_add_link_flags(target flags) :
+http://wiki.ros.org/rosbuild/CMakeLists#rosbuild_add_link_flags
+
+ROS_LINK_FLAGS:
+http://wiki.ros.org/rosbuild
+----------------------------------------------------------------------------
+## Set up ROS connection between two computers through ssh
+Master <= ROS => Slave
+
+*Note: all the operation can be done on the laptop.*
+
+* Laptop:    
+
+        ssh odroid@192.168.10.101(eth0) 200(wlan0)
+        
+* Odroid terminal: (Master)
+
+        roscore
+        export ROS_IP=192.....
+        export ROS_HOSTNAME=${ROS_IP}
+        export ROS_MASTER_URI=http://${ROS_IP}:11311
+        
+* Laptop terminal:
+
+        export ROS_IP=laptop's IP
+        export ROS_HOSTNAME=${laptop's ROS_IP}
+        export ROS_MASTER_URI=http://${odroid's ROS_IP}:11311
+         
+* In ssh connection:
+
+     use scy command to copy file
+     
+        scp source_file odroid@192.168.10.101:~/.ros/camera_info/
+-----------------------------------------------------------------   
+
+## write launch file
+
+#### Vicon
+NOTE: 
+
+the remap name from "~vicon" in "vicon_odom" must be the same with the name of topic "vicon" publishes.
+This will connect node "vicon" with node "vicon_odom".
+"vicon" publish the topic /vicon/base_obj with the type of vicon/subject
+"vicon_odom" should subscribe the /vicon/base_obj and then
+"vicon_odom" can publish the topic /vicon/odom with the type of nav_msg/Odometry
 
 
+        <!-- Vicon system, publish /vicon/base_obj -->
+        <node   pkg="vicon"
+                type="vicon"
+                name="vicon"
+                output="screen">
+        <param name="vicon_server" value="192.168.10.1"/>
+        </node>
+        <!-- publish /vicon/base_obj -->
+        
+        <!-- Specify a Vicon object -->
+        
+        <node   pkg="vicon_odom"
+                type="vicon_odom"
+                name="$(arg baseline)_vicon_odom"
+                output="screen">
+        <param name="frame_id/fixed" value="vicon"/>
+        <param name="frame_id/base" value="$(arg baseline)/base"/>
+        <remap from="~vicon" to="/vicon/base_obj"/>
+        <remap from="~odom" to="/vicon/odom"/>
+        </node>
 
 
 

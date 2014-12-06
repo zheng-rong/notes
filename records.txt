@@ -1,350 +1,9 @@
 
-
-
-======================= Qground control =============
-Ref: https://github.com/mavlink/qgroundcontrol/blob/master/README.md
-
-
-Qgroundcontrol:
-http://qgroundcontrol.org/dev/build_source
-https://github.com/mavlink/qgroundcontrol.git
-
-installation instruction:
-https://github.com/mavlink/qgroundcontrol/blob/master/README.md
-
-git clone git://github.com/mavlink/qgroundcontrol.git 
-cd qgroundcontrol 
-git submodule init 
-git submodule update
-
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test 
-sudo apt-add-repository ppa:ubuntu-sdk-team/ppa 
-sudo apt-get update
-
-
-Error: libqt5serialport5-dev
-
-http://askubuntu.com/questions/279421/how-can-i-install-qt-5-x-on-12-04-ltsr
-
-Install Qt 5.2 on Ubuntu 13.10
-This article on Qt official site is old. Today, I try to install Qt 5.2.0 on my Ubuntu 13.10. Below is my steps:
-
-1. Download Qt 5.2.0 for Linux
-
-http://qt-project.org/downloads
-
-    wget http://download.qt-project.org/official_releases/qt/5.2/5.2.0/qt-linux-opensource-5.2.0-x86_64-offline.run
-
-
-2.  Give the downloaded file execute permission, then execute it
-
-    chmod +x ./qt-linux-opensource-5.2.0-x86_64-offline.run
-    ./qt-linux-opensource-5.2.0-x86_64-offline.run
-
-You will see one setup dialog, following the setup wizard.
-
-
-
-=================== GitHub Basics ====================
-git add file-name
-git commit -m "commit message"
-git push
-
-git rm file-name
-git commit -m "remove a file"
-git push
-
-# modify file-1
-git commit file-1 -m "modify this file"
-git push
-
-git add file-names
-git commit -a -m "creat"
-git push
-
-
----------------------------------------------------------------
---------------------- Setting up your laptop ------------------
----------------------------------------------------------------
-
-1. install Ubuntu
-sudo apt-get update
-sudo apt-get upgrade
-
-2. basic setting
-input method
-language support
-ibus-setup
- 
-3. set up the bash
-Ref: https://help.ubuntu.com/community/CustomizingBashPrompt
-gedit .bashrc
-uncomment:
-#force_color_prompt=yes 
-
-4. install logitech unifying
-sudo add-apt-repository ppa:daniel.pavel/solaar
-sudo apt-get update
-sudo apt-get install solaar
-
-5. install　ROS
-
-
-6. install vim install mv-camera-driver
-reboot
-test via wxPropView
-install ROS-camera-driver
-copy camera calibration file
-test image_view
-test stereo_view
-
-7. download sandbox
-git clone URL
-./update --devel
-
-
-8. follow Ellen's note
-install IPC
-install Matlab
-
-
-9. install gperftools
-
-10. install sublime-text 
-
-For Sublime-Text-3:
-sudo add-apt-repository ppa:webupd8team/sublime-text-3
-sudo apt-get update
-sudo apt-get install sublime-text-installer
-
-11. install others
-install tex-live
-install tex-maker
-install skype
-install dropbox
-install everpad
-install Gparted
-install partitionmanager
-
-install retext
-Markdown 是一种轻量级标记语言。
-
-install sublime text
-
-
-12. setup printer
-
-If you have an SCS account there are several ways to print:
-
-    The prefered method is here.
-    In linux (Ubuntu):
-          Go to System -> Administration -> Printing
-          Click 'Add'
-          Expand 'Network Printer'
-          Select 'LPD/LPR Host or Printer'
-          The information that changes are the Host and Queue fields. Queue will always refer to the name of the printer (see table below).
-    You can install a printer as a local printer using a TCP/IP port (see below for a list of printer IP's). This should work from a wired or wireless machine with Windows or Linux for **some** printers.
-    The last way works in Windows with many HP printers and is simple to setup. For this method use the IP's from below and install the HP universal print driver which can be Found Here
-    Printer	IP	FQDN	Model	Location	Host
-    boulder	128.2.177.195	boulder.prt.cs.cmu.edu	HP Color Laserjet 5550N	NSH 1100 (near FRC mailboxes)	cyan.srv.cs.cmu.edu
-    lightning	128.2.177.194	lightning.prt.cs.cmu.edu	HP Laserjet 9000N	NSH 1200 (near e-lab)	cyan.srv.cs.cmu.edu
-    mulch	128.2.177.211	mulch.prt.cs.cmu.edu	HP Laserjet 4350n	NSH 2200 (near FRC grad student offices and water cooler)	cyan.srv.cs.cmu.edu
-    prismCOLOR	128.2.177.208	prismcolor.prt.cs.cmu.edu	HP Color Laserjet 5550DN	NSH 1509 (near NSH 1st floor copy room and RoboLounge)	cyan.srv.cs.cmu.edu
-
-================================
-13. system monitor
-$ sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
-$ sudo apt-get update
-$ sudo apt-get install indicator-sysmonitor
-Optional, to remove indicator sysmonitor, do:
-$ sudo apt-get remove indicator-sysmonitor
-
-system load indicator
-
-
-http://www.noobslab.com/2014/08/useful-panel-indicators-collection-for.html
-http://en.wikipedia.org/wiki/Damping
-http://en.wikipedia.org/wiki/Damping_ratio
-http://hyperphysics.phy-astr.gsu.edu/hbase/mi.html
-
-
-
-
-
-
-
-
-==========================================================================================
-==========================================================================================
-
-===================================================
-=============== px4 WiKi ==========================
-===================================================
-px4 quick start:
-https://pixhawk.org/dev/px4_quickstart
-
-============== use NuttShell ======================
-Ref: https://pixhawk.org/users/serial_connection
-NuttShell (NSH) via Seiral using the kermit:
-
-sudo apt-get install ckermit
-Set your default settings to the correct settings for px4 using the follow code:
-echo "SET LINE /dev/ttyUSB0
-SET SPEED 57600
-SET CARRIER-WATCH OFF
-SET FLOW-CONTROL NONE" > ~/.kermrc
-
-~/.kermrc
-ls /dev/ttyU*     
-sudo kermit
-connect
-enter
-
-[command]
-ls free cd ...
-
-[quit]
-Ctrl+\  and C and quit
-
-============== build and flash the firmware =============
-
-cd ~/src
-git clone https://github.com/PX4/Firmware
-cd Firmware
----------------- GitLab ------------------------------
-git clone git@nmichael.frc.ri.cmu.edu:px4/px4_patches.git
-git checkout -b cmu_develop `cat px4_patches/px4_master_hash`
-git apply --ignore-space-change --ignore-whitespace px4_patches/px4_master_to_cmu_develop_version.diff
-rm -fr src/modules/cmu_rc_command src/modules/cmu_pwm_command src/modules/cmu_attitude_estimator_so3 src/modules/cmu_voltage_monitor
-git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_rc_command.git src/modules/cmu_rc_command
-git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_voltage_monitor.git src/modules/cmu_voltage_monitor
-git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_attitude_estimator_so3.git src/modules/cmu_attitude_estimator_so3
-git clone https://github.com/PX4/NuttX
--------------------------------------------------------
-
-git submodule init
-git submodule update
-
-------------------- GitLab ----------------------------
-vim makefiles/config_px4fmu-v1_default.mk
-
-change line 129:
-From:
-MODULES                += modules/cmu_pwm_command
-To:
-#MODULES                += modules/cmu_pwm_command
--------------------------------------------------------
-
-cd ~/src/Firmware
-make distclean
-make archives
-make
-sudo usermod -a -G dialout $USER
-Log out and log in in linux for changes to take effect. (Very Important!)
-make upload px4fmu-v1_default
-
-
-
-The result should be:
-
-working in [...]/Firmware/Images
-Attempting to flash PX4FMU board via USB
-Loaded firmware for 5,0, waiting for the bootloader...
-
-When you see “waiting for the bootloader” press the “reset” button on the side of the PX4FMU. If the board is now connected & reset, the new firmware will be flashed.
-
-Found board 5,0 on /dev/tty[...]
-erase...
-program...
-verify...
-done, rebooting.
-
-=============== Troubleshooting ======================================
-Board not found (Affects mostly Ubuntu 12.10 users)
-In case the board is not found, make sure you remove the modem-manager by:
-sudo apt-get remove modemmanager
-
-Permission Denied
-If you have no permissions for /dev/ttyACM0 , make sure the user is in group dialout (as described above).
-
-To find out the device name (if not /dev/ttyACM0), do a
-ls /dev/tty*
-when the bootloader is loading (first 5 seconds after reset).
-
-=============== odroid cmu_mavlink ==============================
-odroid sandbox update failed like this:
-[ 12%] Performing download step (git clone) for 'mavlink'
-Cloning into 'mavlink'...
-fatal: unable to access 'https://github.com/mavlink/mavlink.git/': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
-solution:
-git config --global http.sslverify false
-Ref: https://github.com/gitlabhq/gitlabhq/issues/4272#issuecomment-22074932
-
-after the update, 
-catkin_make the dry;
-catkin_make the wet;
-
-vim cmu_mavlink/cmu_mavlink_only.launch
-baudrate:230400
-serialport:/dev/ttyUSB0
-
-============= px4 serial port mapping =============
-ttyS (definition in the px4/microSD/etc/rc.txt)
-HW (defined in the px4 hardware user manual)
-
-ttyS0 <==> HW-UART1
-ttyS1 <==> HW-UART2
-ttyS2 <==> HW-UART5
-ttyS3 <==> HW-UART6
-
-UART_1 connection:
-pin3--black--ground
-pin7--yellow
-pin8--orange
-
-roslaunch cmu_mavlink cmu_mavlink_only.launch
-rostopic list
-rostopic hz /mavlink/att
-rostopic echo /mavlink/att
-==========================================================================================
-==========================================================================================
 ==================== C++ CMake ====================
 cmake -G "Unix Makefiles" ..
 cmake ..
 make
 ./xxx(executable)
-
-====================== ssh ========================
-ls -al ~/.ssh
-ssh-keygen -t rsa -C "your_email@example.com"
-# start the ssh-agent in the background
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-
-
-=================================================
-set up in vim
-
-
-To define this on a permanent basis for the current user, create (or edit) the .vimrc file:
-
-$ vim ~/.vimrc
-
-Then, paste the configuration below into the file. Once vim is restarted, the tab settings will apply.
-
-set tabstop=4       " The width of a TAB is set to 4.
-                    " Still it is a \t. It is just that
-                    " Vim will interpret it to be having
-                    " a width of 4.
-
-set shiftwidth=4    " Indents will have a width of 4
-
-set softtabstop=4   " Sets the number of columns for a TAB
-
-set expandtab       " Expand TABs to spaces
-" set nu
-syntax on
-set autoindent      " auto indent
 
 
 
@@ -352,7 +11,9 @@ set autoindent      " auto indent
 update time and date using command line from Internet
 
 
-You can do so with sudo ntpdate time.nist.gov other servers include time.windows.com, etc.
+You can do so with 
+sudo ntpdate time.nist.gov 
+other servers include time.windows.com, etc.
 
 http://www.pool.ntp.org/ lists time servers around the world.
 
@@ -363,58 +24,35 @@ http://www.pool.ntp.org/ lists time servers around the world.
 
 
 
+================================================
+TO DO LIST
+================================================
+find which package use the MV_CAMERA_ID in config
+how to decrease the datarate of vicon (drop some frames)
+how to set origin of the vicon
+use rviz to plot the vicon odometry
+modify the config/yaml file
 
 
 
-============================================
-Matlab NOTE!
+1. configure camera and vicon
+2. record the bag file
+3. run svo and see the result in rviz
 
-Be careful when trying to print out some information, which can greatly slow the processing speed.
+
+matlab:
+
+unpack_data
+bag_interface
 
 
-============== Feedback control using Simulation via Matlab and IPC ===========
-1. install IPC 
-NOTE:
-Do NOT add "LINUX*" directory in the destination directory
-when copy files from ipc 
-ipc3.9.*/{bin/Linux*, lib/Linux*, include} 
-to 
-/opt/ipc/{bin,lib,include} 
+rostopic type topic-name
+rosmsg show 
 
-2. install Matlab
-3. download cmu_quad_matlab to sandbox
-git clone
-./update  --devel
-4. compile the packages
-solve the problem in vicon-mocap
-goto: cmu-quad-matlab/dry/src/vicon_mocap/libvicon_driver/
-Change the following line:
-Line 24:
-from:
-set(USE_OLD_YAML_CPP_API TRUE CACHE BOOL "Use the old YAML-CPP API")
-to:
-set(USE_OLD_YAML_CPP_API FALSE CACHE BOOL "Use the old YAML-CPP API")
 
-catkin_make wet, it depends on some packages in dry, so before the compile we should source dry directory. (problem "can't find mavlink".)
-======
-manually source:
-firstly souce dry, then source wet
- 
-5. . workon
-try to make workon work correctly:
-add --extend on the second source line
-6. let ROS talk to IPC-bridge
-/opt/ipc/bin/central –u
-7. run Matlab.simple_io_test.m
-cd /cmu_quad_matlab/wet/src/matlab_quadrotor_example/matlab
-8. run launch file
-cd cmu_quad_matlab/wet/src/matlab_quadrotor_example/launch
-roslaunch matlab_quadrotor_example simulation_test.launch
 
-============ trouble shooting =============
-rostopic echo  /test/pd_cmd
-ERROR: Cannot load message class for [quadrotor_msgs/PDCommand]. Are your messages built?
-solution: source the directory using . workon
+
+
 
 
 
