@@ -1,55 +1,31 @@
 
-==================== C++ CMake ====================
-cmake -G "Unix Makefiles" ..
-cmake ..
-make
-./xxx(executable)
-
-
-
-================================================
-update time and date using command line from Internet
-
-
-You can do so with 
-sudo ntpdate time.nist.gov 
-other servers include time.windows.com, etc.
-
-http://www.pool.ntp.org/ lists time servers around the world.
-
-
-
-
-
-
-
 
 ================================================
 TO DO LIST
 ================================================
-find which package use the MV_CAMERA_ID in config
+
 how to decrease the datarate of vicon (drop some frames)
 how to set origin of the vicon
 use rviz to plot the vicon odometry
 modify the config/yaml file
 
 
-
-1. configure camera and vicon
-2. record the bag file
-3. run svo and see the result in rviz
-
-
-matlab:
-
-unpack_data
-bag_interface
-
-
 rostopic type topic-name
 rosmsg show 
 
 
+find the installed packages: (example yaml)
+dpkg --get-selections | grep yaml
+To get a list of packages installed locally do this in your terminal:
+
+dpkg --get-selections | grep -v deinstall
+
+To save that list to a text file called packages on your desktop do this in your terminal:
+
+dpkg --get-selections | grep -v deinstall > ~/Desktop/packages
+
+show the information about a package:
+dpkg -s libyaml-cpp0.5
 
 
 
@@ -58,8 +34,4 @@ rosmsg show
 
 
 
-
-
-
-
-
+ lsb_release -a

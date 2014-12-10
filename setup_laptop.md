@@ -106,6 +106,11 @@ to
 
 http://arma.sourceforge.net/download.html
 
+sudo apt-get install liblapack-dev liblapack3gf liblapack-pic liblapack-test
+
+sudo apt-get install libarpack++2-dev libarpack++2c2a libarpack2 libarpack2-dbg libarpack2-dev
+
+
 Update: Do NOT install OpenBLAS. 
 OpenBLAS has a multi-threading affinity which results in the creation of threads when solving certain classes of problems. Unfortunately, this results in high overhead as the system rapidly creates, clones, and yields numerous threads. This issue is linux specific.
 
@@ -270,6 +275,11 @@ change the Host and Queue fields. Queue is the name of the printer.
     git add file-names
     git commit -a -m "creat"
     git push
+    
+    git status
+    git checkout .
+    git  pull
+    
  
  --------------------------------------------------------
     
@@ -989,5 +999,91 @@ This will connect node "vicon" with node "vicon_odom".
 
 
 
-    
-    
+### Using Vicon_mocap package
+it includes:
+* vicon
+* vicon_odom
+
+after downloading by git clone, place it in the dry folder, then compile it.
+catkin_make_isolated
+catkin_make_isolated --install --pkg vicon_mocap
+
+*For the old version from Github, compile vicon and vicon_odom separately by rosmake, before which you should export the directory*
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/sandbox/vicon_mocap/vicon
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/sandbox/vicon_mocap/vicon_odom
+ 
+*TBD* 
+ set -fPIC flag in libVicon_driver folder CMakelists.txt, add:
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fPIC")   
+
+### C++ CMake
+
+cmake
+cmake ..
+make
+./xxx(executable file)
+
+### Set/update time and date of Ubuntu
+* update
+        sudo ntpdate time.nist.gov 
+*other servers include time.windows.com, [here](http://www.pool.ntp.org/) lists time servers around the world.*
+
+* set
+        sudo date --set "25 Sep 2013 15:00:00"
+        sudo date 010224311971.59
+        sudo date --set="1971-01-02 24:31:59.990"  && date --rfc-3339=ns
+        
+        
+### Matlab in Ubuntu
+
+* set up shortcut as Windows
+
+#### slam_test_suite
+
+* correspondence
+
+        svo/absolute_odom ==> svt
+        
+* before use        
+1.change the topic name in the bag_interfece from line 14;      
+2.change the display options in plot_options from line 12;      
+3.change the vehicle_name in plot_options from line 2;      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
