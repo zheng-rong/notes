@@ -1,37 +1,283 @@
 
 
-================================================
-TO DO LIST
-================================================
+lsb_release -a
+ps aux | grep master
+kill -9 18747
 
-how to decrease the datarate of vicon (drop some frames)
-how to set origin of the vicon
-use rviz to plot the vicon odometry
-modify the config/yaml file
+ 
+rosbag info bagfile-name
 
 
-rostopic type topic-name
-rosmsg show 
+=== test Dec 11 2014 baseline=16cm
+== from the origin
+india_baseline_06: body frame initially aligned with vicon, move x
+india_baseline_07: body frame initially aligned with vicon, move x
+india_baseline_08: body frame initially aligned with vicon, move y
+india_baseline_09: body frame initially aligned with vicon, move-x
+india_baseline_10: body frame initially aligned with vicon, move-y
+india_baseline_11: body frame initially aligned with vicon, move-x
+india_baseline_12: body frame initially aligned with vicon, move-y
+india_baseline_13: body frame initially aligned with vicon, move x y
+india_baseline_14: body frame initially aligned with vicon, move-x y
+india_baseline_15: body frame initially aligned with vicon, move-x-y
+india_baseline_16: body frame initially aligned with vicon, move x-y
+
+== from the origin
+india_baseline_17: body fram camera facing +x , move x
+india_baseline_17_1: body fram camera facing +x , move x
+india_baseline_18: body fram camera facing +x , move -x
+india_baseline_19: body fram camera facing +x , move y
+india_baseline_20: body fram camera facing +x , move -y
+
+india_baseline_21: body fram camera facing +x , move x-x+x
+india_baseline_22: body fram camera facing +x , move y-y+y
+
+india_baseline_23: body fram camera facing +x , take off move x-x+x +y-y+y
+india_baseline_24: body fram camera facing +x , tke off turn around
+
+india_baseline_25: body fram camera facing +x , take off move forward along a circle
+
+== from an offset x=-2
+india_baseline_26: body fram camera facing +x , take off move forward x-x
+india_baseline_27: body fram camera facing +x , take off move forward y-y
+india_baseline_28: body fram camera facing +x , take off turn around slowly
 
 
-find the installed packages: (example yaml)
-dpkg --get-selections | grep yaml
-To get a list of packages installed locally do this in your terminal:
+30: 
+31: x-x
+32: x y-y-x
+33: y-y
+34: x y-y y-y-x
+35: x turn -turn turn -turn -x
+36: square moving
+37: X moving		frame lost
+38: retangular
+39: big X moving
+40: square			significant frame lost
+41: Z moving
+42: forward square	frame lost
+43: T+R
+44: take off + square
+45: take off + square + rotation
+46: take off + T fast
+47: take off + move around facing one direction
 
-dpkg --get-selections | grep -v deinstall
+49: from ground
+50: from desk
+51: from desk
+52: from desk fast moving
+53: from desk fast
+54: from ground fast
+55: from ground fast long
+56: from ground +slow R
+57: from ground normal complex path
+58: from ground normal easy path
+59: varify vicon compensation R
+60:  from ground normal
+61: on the chair to varify attitude (should be very small change)
 
-To save that list to a text file called packages on your desktop do this in your terminal:
-
-dpkg --get-selections | grep -v deinstall > ~/Desktop/packages
-
-show the information about a package:
-dpkg -s libyaml-cpp0.5
+======================
+Dec 14
+new calibration:
 
 
+//=============================================
+using calibration parameter-1
+74:
+76:
+77:
+78:
+79: x-y-x
+
+using calibration parameter-2
+75:
+80:
+
+
+=======check these files========================
+camera calibration file
+parameter
+env file
+vicon calibration file
+files in quad
+
+================================
+Bibtex
+==========
+@INPROCEEDINGS{Zhang95scaledeuclidean,
+    author = {Zhongfei Zhang and Allen R. Hanson},
+    title = {Scaled Euclidean 3D Reconstruction Based On Externally Uncalibrated Cameras},
+    booktitle = {In IEEE Symposium on Computer Vision, Coral Gables, FL},
+    year = {1995},
+    pages = {37--42}
+}
+
+
+==========================C++=========================
+//开头就是两个冒号用于引用全局变量
+int count = 0; //全局变量
+int main(void) 
+{
+	int count = 0; //局部变量
+	::count = 1; //设全局变量 count 为 1
+	count = 2; //设局部变量 count 为 2
+	return 0;
+}
 
 
 
+=======================================================
+set up the camera trigger:
+http://www.matrix-vision.com/manuals/mvBlueFOX/UseCases_page_0.html#UseCases_section_ExternalTrigger
+
+trigger mode = OnHighLevel
+trigger source = DigIn0
 
 
+git fetch
+git branch
+git diff
+git stash
+git branch -r
+git checkout -b your_branch_name tracked_branch_name
+git stash pop
+git log
+git pull
 
- lsb_release -a
+
+===== VIM ====
+hljk
+(){}
+we
+
+:e filename      - edit another file
+ :split filename  - split window and load another file
+ ctrl-w up arrow  - move cursor up a window
+ ctrl-w ctrl-w    - move cursor to another window (cycle)
+ ctrl-w_          - maximize current window
+ ctrl-w=          - make all equal size
+ 10 ctrl-w+       - increase window size by 10 lines
+ :vsplit file     - vertical split
+ :sview file      - same as split, but readonly
+ :hide            - close current window
+ :only            - keep only this window open
+ :ls              - show current buffers
+ :b 2             - open buffer #2 in this window
+
+
+============================================
+=========== TO DO ==========================
+============================================
+V--px4 flashing&boot
+V--write a node
+V--sync the gpio-time and image
+V--set up trigger for india
+V--time align namespace problem
+V--image flip
+
+move to matrixvision_camera from NM and patch
+follow the new branch of svo & understand
+occupancy grid dense map
+read paper about OM
+patch matrixvision_camera
+test new svo on india (efficiency)
+test new svo on mini-quad-odroid
+evaluate the new camera driver
+
+
+=== how to use gpio_trigger ===
+update cmu_mavlink branch
+update quadrotor_msgs branch
+add node in mv_camera
+modify the following files
+	modify_camera_settings
+	CMakeList.txt
+
+in big quad, notice the launchfile/mavlink/ttyUSB. It should be correspond to the hardware serial port of CPU.
+
+
+87mins lost 34 frames in gpio-trigger test on odroid
+
+//============== reading notes =============
+
+//========== DVS =============
+high time resolution
+=> motion blur
+=> for robots with very high speed
+
+really appealing
+1. Is it valuable to use this in our normal use (not very high speed)?
+2. Is it precise to get image frame by accumulating the differential data?
+or use the moving pixel directly as the feature point? 
+
+[Youtube video from ETHZ]
+https://www.youtube.com/watch?v=LauQ6LWTkxM
+http://spectrum.ieee.org/automaton/robotics/robotics-hardware/dynamic-vision-sensors-enable-high-speed-maneuvers-with-robots
+
+[a breief description]
+http://www.inilabs.com/products/dynamic-vision-sensors
+
+
+//============= use mv_driver =========
+
+arkin:~/temp$ mkdir wks
+arkin:~/temp$ cd wks/
+arkin:~/temp/wks$ mkdir dry
+arkin:~/temp/wks$ cd dry/
+arkin:~/temp/wks/dry$ wstool init  src
+Writing /home/arkin/temp/wks/dry/src/.rosinstall
+
+update complete.
+arkin:~/temp/wks/dry$ cd src/
+arkin:~/temp/wks/dry/src$ ls
+arkin:~/temp/wks/dry/src$ git clone git@nmichael.frc.ri.cmu.edu:external/matrixvision_camera.git
+Cloning into 'matrixvision_camera'...
+remote: Counting objects: 37, done.
+remote: Compressing objects: 100% (37/37), done.
+remote: Total 37 (delta 19), reused 0 (delta 0)
+Receiving objects: 100% (37/37), 9.45 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (19/19), done.
+Checking connectivity... done.
+arkin:~/temp/wks/dry/src$ cd ..
+arkin:~/temp/wks/dry$ catkin_make_isolated --install 
+
+// in the github matrixvision_camera folder (very deep directory)
+change something
+git diff
+git status
+git add .
+git add . --all
+git rm xxxxxx
+git commit -m ""
+git log
+
+
+// build the modified github-matrixvision_camera
+export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/github/test/matrixvision_camera/
+rosmake
+
+
+//create a new patch file
+git format-patch -2 HEAD --stdout
+git format-patch -2 HEAD --stdout > ../../../../../../dry/src/matrixvision_camera/config_no_driver.patch
+
+//if you want to rebuild (catkin_make_isolated), you must remove the old build file. Re-build, it will apply the new patch file.
+rm -rf build devel install
+catkin_make_isolated --install 
+
+
+//============= Git command ===============
+
+unset ROS_PACKAGE_PATH 
+export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/github/test/matrixvision_camera/
+
+patch -p1 < ../matrixvision_camera_patch_1.patch
+
+git init
+git add .
+git commit
+git remote add origin https://github.com/zheng-rong/name.git
+git remote -v
+
+git remote rm origin
+git remote -v

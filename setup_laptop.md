@@ -1,23 +1,79 @@
 #<center> Set up your laptop in Ubuntu
 <center><big>*Zheng Rong  @ Dec. 5 2014*</big>
 
-<center>![text](logo.gif)
+<center>![text](image/logo.gif)
+
+[link1](html-export.html)
 
 ---------------------------------------------
 
 ## install Ubuntu
 
-    sudo apt-get update
-    sudo apt-get upgrade
----------------------------------------------    
-## input method    
-language support    
-text entry setting  
-preference setting  
+        sudo apt-get update
+        sudo apt-get upgrade
 
+--------------------------------------------
+
+## Ubuntu on MAC
+
+http://linux.cn/article-3245-1.html
+https://help.ubuntu.com/community/MacBookPro
+
+double disk in mac mini
+http://nb.zol.com.cn/367/3671091.html
+https://www.ifixit.com/Guide/Installing+Mac+Mini+Late+2012+Dual+Hard+Drive+Kit/11713
+
+some setup for Ubuntu
+        
+--------------------------------------------- 
+   
+## input method   
+ 
+        language support    
+        text entry setting  
+        preference setting  
+
+---------------------------------------------
+
+## Set/update time and date
+
+* update with Internet
+
+        sudo ntpdate time.nist.gov 
+        
+*other servers include time.windows.com, [here](http://www.pool.ntp.org/) lists time servers around the world.*
+
+* set
+        sudo date --set "25 Sep 2013 15:00:00"  
+        sudo date 010224311971.59   
+        sudo date --set="1971-01-02 24:31:59.990"  && date --rfc-3339=ns    
+        
+---------------------------------------------
+
+## Commands about packages
+
+find the installed packages: (example yaml)
+
+        dpkg --get-selections | grep yaml
+
+show the information about a package
+
+        dpkg -s package-name
+
+To get a list of packages installed locally
+
+        dpkg --get-selections | grep -v deinstall
+
+To save that list to a text file 
+
+        dpkg --get-selections | grep -v deinstall > ~/Desktop/packages
+        
 ----------------------------------------------
 ## set up the bash
-[REF](https://help.ubuntu.com/community/CustomizingBashPrompt)  
+
+[REF](https://help.ubuntu.com/community/CustomizingBashPrompt) 
+ 
+[using the attached file](dot-bashrc)
 
     gedit ~/.bashrc   
     
@@ -30,9 +86,10 @@ to
 ----------------------------------------------
 
 ## install logitech unifying
-    sudo add-apt-repository ppa:daniel.pavel/solaar
-    sudo apt-get update
-    sudo apt-get install solaar
+
+        sudo add-apt-repository ppa:daniel.pavel/solaar
+        sudo apt-get update
+        sudo apt-get install solaar
 
 ----------------------------------------------
 
@@ -42,11 +99,15 @@ to
 ----------------------------------------------
 
 ## install vim 
-    sudo apt-get install vim      
+
+        sudo apt-get install vim      
+        
 *set up the vim*   
 
 * create (or edit) the .vimrc file:   
-    vim ~/.vimrc    
+
+        vim ~/.vimrc    
+        
 * paste the configuration below into the file.   
 
         set tabstop=4       " The width of a TAB is set to 4.
@@ -64,22 +125,31 @@ to
 
 ----------------------------------------------
 
+## install adobe reader
+
+        acrobat adobe reader
+        ardownload.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
+        
+----------------------------------------------
+
 ## install sublime-text-3 
-    sudo add-apt-repository ppa:webupd8team/sublime-text-3
-    sudo apt-get update
-    sudo apt-get install sublime-text-installer
+
+        sudo add-apt-repository ppa:webupd8team/sublime-text-3
+        sudo apt-get update
+        sudo apt-get install sublime-text-installer
 
 ----------------------------------------------
 
-## install others    
-    sudo apt-get install tex-live
-    sudo apt-get install tex-maker
-    sudo apt-get install skype
-    sudo apt-get install dropbox
-    sudo apt-get install everpad
-    sudo apt-get install Gparted
-    sudo apt-get install partitionmanager
-    sudo apt-get install retext
+## install others   
+ 
+        sudo apt-get install tex-live
+        sudo apt-get install tex-maker
+        sudo apt-get install skype
+        sudo apt-get install dropbox
+        sudo apt-get install everpad
+        sudo apt-get install Gparted
+        sudo apt-get install partitionmanager
+        sudo apt-get install retext
 
 *retext is a editor based on Markdown* 
 [how to use retex](https://github.com/LearnShare/Learning-Markdown)
@@ -90,15 +160,15 @@ to
 
 ### install packages
 
-    sudo apt-get install swig
-    sudo apt-get install openjdk-7-jdk
-    sudo apt-get install flex
-    sudo apt-get install libboost-all-dev libboost-dev
-    sudo apt-get install libgsl0-dev
-    sudo apt-get install libeigen3-dev 
-    sudo apt-get install libatlas-dev
-    sudo apt-get install libatlas-base-dev
-    sudo apt-get install libatlas3gf-base
+        sudo apt-get install swig
+        sudo apt-get install openjdk-7-jdk
+        sudo apt-get install flex
+        sudo apt-get install libboost-all-dev libboost-dev
+        sudo apt-get install libgsl0-dev
+        sudo apt-get install libeigen3-dev 
+        sudo apt-get install libatlas-dev
+        sudo apt-get install libatlas-base-dev
+        sudo apt-get install libatlas3gf-base
 
 <big>install Armadillo</big>
 
@@ -121,6 +191,7 @@ Again, download “yaml-cpp_0.5.1.tar.gz” from their website and install using
 https://code.google.com/p/yaml-cpp/ 
 
 ###install bison
+
 Go to [gnu project archives](http://ftp.gnu.org/gnu/bison)  
 download the “bison-2.5.tar.gz”
 
@@ -184,19 +255,9 @@ to
 
 ###install Matlab
 
-
-
-
-
+use your own Matlab install file
 
 ----------------------------------------------
-
-## install gperftools
-[google performance tools]()
-
-----------------------------------------------
-
-
 
 ## setup printer in FRC.RI.CMU
 
@@ -242,98 +303,114 @@ change the Host and Queue fields. Queue is the name of the printer.
 ----------------------------------------------
 
 ## install system monitor
-    sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
-    sudo apt-get update
-    sudo apt-get install indicator-sysmonitor
-    sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
-    sudo apt-get install indicator-multiload
+
+        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+        sudo apt-get update
+        sudo apt-get install indicator-sysmonitor
+        sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
+        sudo apt-get install indicator-multiload
  
  ----------------------------------------------
     
 ## use GitHub
 ### ssh key
 
-    ls -al ~/.ssh
-    ssh-keygen -t rsa -C "your_email@example.com"    
+        ls -al ~/.ssh
+        ssh-keygen -t rsa -C "your_email@example.com"    
 *start the ssh-agent in the background*
-    eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_rsa
 
 ### command set
-    git add file-name
-    git commit -m "commit message"
-    git push
-    
-    git rm file-name
-    git commit -m "remove a file"
-    git push
-    
-    modify file-1
-    git commit file-1 -m "modify this file"
-    git push
-    
-    git add file-names
-    git commit -a -m "creat"
-    git push
-    
-    git status
-    git checkout .
-    git  pull
+        git add file-name
+        git commit -m "commit message"
+        git push
+        
+        git rm file-name
+        git commit -m "remove a file"
+        git push
+        
+        modify file-1
+        git commit file-1 -m "modify this file"
+        git push
+        
+        git add file-names
+        git commit -a -m "creat"
+        git push
+        
+        git status
+        git checkout .
+        git  pull
+        
+        patch -p1 < ../matrixvision_camera_patch_1.patch
+
+        // there is no way to create a remote repository using local command line
+        // we must use web access or GitHub API
+        // initialize the local folder as a git repository
+        git init
+        git add .
+        git commit
+        git remote add origin https://github.com/zheng-rong/name.git
+        git remote -v
+        
+        git remote rm origin
+        git remote -v
     
  
  --------------------------------------------------------
     
 ## Wiki of px4
+
 [px4 quick start](https://pixhawk.org/dev/px4_quickstart)
 ### NuttShell (NSH) via Seiral using the kermit:
 [Ref](https://pixhawk.org/users/serial_connection)
 
-    sudo apt-get install ckermit
-    *Set your default settings to the correct settings for px4:*  
-    echo "SET LINE /dev/ttyUSB0
-    SET SPEED 57600
-    SET CARRIER-WATCH OFF
-    SET FLOW-CONTROL NONE" > ~/.kermrc
-    
-    ~/.kermrc
-    ls /dev/ttyUSB*     
-    sudo kermit
-    connect
-    enter
+        sudo apt-get install ckermit
+        *Set your default settings to the correct settings for px4:*  
+        echo "SET LINE /dev/ttyUSB0
+        SET SPEED 57600
+        SET CARRIER-WATCH OFF
+        SET FLOW-CONTROL NONE" > ~/.kermrc
+        
+        ~/.kermrc
+        ls /dev/ttyUSB*     
+        sudo kermit
+        connect
+        enter
 
 *command:*  
 
-    ls 
-    free 
-    cd
+        ls 
+        free 
+        cd
 
 *quit:* 
  
-    Ctrl+\  
-    C   
-    quit
+        Ctrl+\  
+        C   
+        quit
 
 ### build and flash the firmware 
 
-    cd ~/src
-    git clone https://github.com/PX4/Firmware
-    cd Firmware
+        cd ~/src
+        git clone https://github.com/PX4/Firmware
+        cd Firmware
     *GitLab special start*
-    git clone git@nmichael.frc.ri.cmu.edu:px4/px4_patches.git
-    git checkout -b cmu_develop `cat px4_patches/px4_master_hash`
-    git apply --ignore-space-change --ignore-whitespace px4_patches/px4_master_to_cmu_develop_version.diff
-    rm -fr src/modules/cmu_rc_command src/modules/cmu_pwm_command src/modules/cmu_attitude_estimator_so3 src/modules/cmu_voltage_monitor
-    git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_rc_command.git src/modules/cmu_rc_command
-    git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_voltage_monitor.git src/modules/cmu_voltage_monitor
-    git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_attitude_estimator_so3.git src/modules/cmu_attitude_estimator_so3
-    git clone https://github.com/PX4/NuttX
+        git clone git@nmichael.frc.ri.cmu.edu:px4/px4_patches.git
+        git checkout -b cmu_develop `cat px4_patches/px4_master_hash`
+        git apply --ignore-space-change --ignore-whitespace px4_patches/px4_master_to_cmu_develop_version.diff
+        rm -fr src/modules/cmu_rc_command src/modules/cmu_pwm_command src/modules/cmu_attitude_estimator_so3 src/modules/cmu_voltage_monitor
+        git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_rc_command.git src/modules/cmu_rc_command
+        git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_voltage_monitor.git src/modules/cmu_voltage_monitor
+        git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_attitude_estimator_so3.git src/modules/cmu_attitude_estimator_so3
+        git clone https://github.com/PX4/NuttX
     *GitLab special end*
     
-    git submodule init
-    git submodule update
+        git submodule init
+        git submodule update
     
     *GitLab special*
-    vim makefiles/config_px4fmu-v1_default.mk
+        vim makefiles/config_px4fmu-v1_default.mk
     
     change line 129:
     From:
@@ -341,48 +418,56 @@ change the Host and Queue fields. Queue is the name of the printer.
     To:
     #MODULES                += modules/cmu_pwm_command
     
-    cd ~/src/Firmware
-    make distclean
-    make archives
-    make
-    sudo usermod -a -G dialout $USER
-    Log out and log in in linux for changes to take effect. (Very Important!)
-    make upload px4fmu-v1_default
+        cd ~/src/Firmware
+        make distclean
+        make archives
+        make
+        sudo usermod -a -G dialout $USER
+        *Log out and log in in linux for changes to take effect. (Very Important!)*
+        make upload px4fmu-v1_default
 
 
 
 The result should be:
 
-working in [...]/Firmware/Images    
-Attempting to flash PX4FMU board via USB    
-Loaded firmware for 5,0, waiting for the bootloader...  
+        working in [...]/Firmware/Images    
+        Attempting to flash PX4FMU board via USB    
+        Loaded firmware for 5,0, waiting for the bootloader...  
 
 When you see “waiting for the bootloader” press the “reset” button on the side of the PX4FMU. If the board is now connected & reset, the new firmware will be flashed.  
 
-Found board 5,0 on /dev/tty...  
-erase...    
-program...  
-verify...   
-done, rebooting.    
+        Found board 5,0 on /dev/tty...  
+        erase...    
+        program...  
+        verify...   
+        done, rebooting.    
 
 ### Troubleshooting 
+
+####GCC version problem
+[ref](https://pixhawk.org/dev/toolchain_installation_lin)
+gcc-arm-none-eabi version is too high, not supported.
+This will cause make error;
+Sometime though the building pass, but after the flashing operation, the px4 can NOT boot correctly.
+
 ####Board not found (Affects mostly Ubuntu 12.10 users) 
 In case the board is not found, make sure you remove the modem-manager by:  
-    sudo apt-get remove modemmanager    
+
+        sudo apt-get remove modemmanager    
 
 ####Permission Denied
 If you have no permissions for /dev/ttyACM0 , make sure the user is in group dialout (as described above).      
 
-    sudo usermod -a -G dialout $USER     
+        sudo usermod -a -G dialout $USER     
          
 Log out and log in in linux for changes to take effect. (Very Important!)
 
 ####To find out the device name (if not /dev/ttyACM0), do a
-    ls /dev/tty*    
+
+        ls /dev/tty*    
 when the bootloader is loading (first 5 seconds after reset).
 
 ### install Qground control 
-
 
 [Qgroundcontrol](http://qgroundcontrol.org/dev/build_source)
 
@@ -391,47 +476,86 @@ when the bootloader is loading (first 5 seconds after reset).
 [installation instruction](https://github.com/mavlink/qgroundcontrol/blob/master/README.md)
 
 ### px4 serial port mapping
+
 ttyS (definition in the px4/microSD/etc/rc.txt) 
+
 HW (defined in the px4 hardware user manual)    
 
-    ttyS0 <==> HW-UART1     
-    ttyS1 <==> HW-UART2     
-    ttyS2 <==> HW-UART5     
-    ttyS3 <==> HW-UART6     
-
-    UART_1 --- FTDI  
-    pin3 --- black--ground
-    pin7 --- yellow
-    pin8 --- orange
+        ttyS0 <==> HW-UART1     
+        ttyS1 <==> HW-UART2     
+        ttyS2 <==> HW-UART5     
+        ttyS3 <==> HW-UART6     
+    
+        UART_1 --- FTDI  
+        pin3 --- black--ground
+        pin7 --- yellow
+        pin8 --- orange
 
 
 ### odroid cmu_mavlink 
-    git clone cmu_mavlink
-    ./update --devel
+
+        git clone cmu_mavlink
+        ./update --devel
+        
 ####trouble shooting 
-[Ref](https://github.com/gitlabhq/gitlabhq/issues/4272#issuecomment-22074932)   
+[Ref](https://github.com/gitlabhq/gitlabhq/issues/4272#issuecomment-22074932)  
+
 odroid sandbox update failed like this: 
-[ 12%] Performing download step (git clone) for 'mavlink'   
-Cloning into 'mavlink'...   
-fatal: unable to access 'https://github.com/mavlink/mavlink.git/':   server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none   
+        [ 12%] Performing download step (git clone) for 'mavlink'   
+        Cloning into 'mavlink'...   
+        fatal: unable to access 'https://github.com/mavlink/mavlink.git/':   server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none   
 solution:   
-    git config --global http.sslverify false    
+        git config --global http.sslverify false    
     
 
 
 after the update:   
-    catkin_make the dry;
-    catkin_make the wet;
+        catkin_make the dry;
+        catkin_make the wet;
 
 modify: vim cmu_mavlink/cmu_mavlink_only.launch     
-    baudrate:230400     
-    serialport:/dev/ttyUSB0
+        baudrate:230400     
+        serialport:/dev/ttyUSB0
+    
+        roslaunch cmu_mavlink cmu_mavlink_only.launch
+        rostopic list
+        rostopic hz /mavlink/att
+        rostopic echo /mavlink/att
+ 
+### Overview of onboard peripherals
+Buses & DMA
 
-    roslaunch cmu_mavlink cmu_mavlink_only.launch
-    rostopic list
-    rostopic hz /mavlink/att
-    rostopic echo /mavlink/att
+This is a preliminary listing of the used buses and the connected peripherals.
+
+Bus 	       DMA 	                   Used for
+UART1 	rx: DMA2 Stream 5 Channel 4 	Main Radio Link / (Debug Console)
+UART2 	rx: DMA1 Stream 5 Channel 4 	Secondary Radio / ARDrone Motors
+UART5 	rx: DMA1 Stream 0 Channel 4 	Onboard Computer Link
+UART6 	rx: DMA2 Stream 2 Channel 5 	GPS
+SPI1 	- 	Accelerometer & Gyros
+SPI3 	rx: DMA1 Stream 2 Channel 0 	SDCard
+		tx: DMA1 Stream 7 Channel 0
+I2C1 	- 	MK Motorcontroller output
+I2C2 	- 	Barometer & Magnetometer
+I2C3 	- 	PX4IO communication tx/rx
+ADC3 	DMA2 Stream 1 Channel 2 	4-Channel 12-bit ADC
+
+
+Timers
+Timer 	Used for
+TIM1 	High Resolution Timer (Callback Scheduling)
+TIM2 	PWM servo output
+TIM3 	PWM Output for tone alarm / Interrupt for 1-bit Wave Audio
+TIM4 	ADC3 Conversion triggering
+TIM8 	PWM servo output 
+
+
+https://pixhawk.org/firmware/apps/start
+https://pixhawk.org/start?id=firmware/apps/fmu
+https://pixhawk.org/firmware/apps/gpio_led
+https://pixhawk.org/firmware/apps/tests       
 ---------------------------------------------------------------------
+
 ##Feedback control using Simulation via Matlab and IPC 
 
 ### download cmu_quad_matlab to sandbox
@@ -442,17 +566,15 @@ modify: vim cmu_mavlink/cmu_mavlink_only.launch
 solve the problem in vicon-mocap        
 goto: cmu-quad-matlab/dry/src/vicon_mocap/libvicon_driver/
 
-Change the following line:
+Change the line 24:
 
-Line 24:
-
-from:   
-
-    set(USE_OLD_YAML_CPP_API TRUE CACHE BOOL "Use the old YAML-CPP API")
-
-to: 
-
-    set(USE_OLD_YAML_CPP_API FALSE CACHE BOOL "Use the old YAML-CPP API")
+    from:   
+    
+        set(USE_OLD_YAML_CPP_API TRUE CACHE BOOL "Use the old YAML-CPP API")
+    
+    to: 
+    
+        set(USE_OLD_YAML_CPP_API FALSE CACHE BOOL "Use the old YAML-CPP API")
 
 catkin_make wet, it depends on some packages in dry, so before the compile we should source dry directory. (solution to problem "can't find mavlink".)
  
@@ -496,25 +618,26 @@ solution: source the directory using . workon in current terminal
 
 #### install [expat-2.1.0](http://sourceforge.net/projects/expat/)
     
-    mkdir build                 in the expat-2.1.0 project folder
-    cd build
-    cmake ..                    
-    make
-    sudo make install
-
-    ./configure
-    make
-    sudo make install
+        mkdir build                 in the expat-2.1.0 project folder
+        cd build
+        cmake ..                    
+        make
+        sudo make install
+    
+        ./configure
+        make
+        sudo make install
 
 #### install Linux camera driver mvBlueFOX-xxxxxxxxx
 
 download 2 files and run the following command:
-    chmod a+x install_mvBlueFOX.sh 
-    ./install_mvBlueFOX.sh 
+        chmod a+x install_mvBlueFOX.sh 
+        ./install_mvBlueFOX.sh 
 
 #### test using wxPropView
 reboot  
-test via wxPropView 
+test using
+        wxPropView 
 
 -----------------------------------------------------------------
 ## install ROS-camera driver matrixvision_camera on PC
@@ -528,10 +651,10 @@ test via wxPropView
 6. roslaunch launchfile-name
 7. rostopic list make sure the stereo camera are publishing:
     
-    /stereo/left/image_raw
-    /stereo/left/camera_info
-    /stereo/right/image_raw
-    /stereo/right/camera_info
+        /stereo/left/image_raw
+        /stereo/left/camera_info
+        /stereo/right/image_raw
+        /stereo/right/camera_info
 
 8. rostopic hz topic-name
 9. rosrun image_view image_view image:=/stereo/left/image_raw
@@ -559,13 +682,15 @@ test image_view
 test stereo_view
 
 ##Install ROS-camera driver on Odroid
-Before this step, we should install mvBlueFOX driver firstly.   
+
+Before this step, we should install mvBlueFOX driver firstly. 
+  
 1. git clone matrixvision_camera from ethz Github
-    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/     
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/     
 2. modify the make.sh file in the mv_driver folder   ---Arkin   see attached    
 3. copy 4 folder from mv_driver/mvIMPACT_acquire to /opt/ros/indigo/include 
     DriverBase, mvDeviceManager, mvIMPACT_CPP, mvPropHandling
-    sudo cp -r source-directory dest-directory  
+        sudo cp -r source-directory dest-directory  
 *Note: the folder mv_driver/mvIMPACT_acquire will not exist until we rosmake it in directory matrixviaion_camera, but this rosmake will have some error.*   
 4. rosmake it again, then it passed.    
 5. modify the code according to Ke's code component 
@@ -672,12 +797,14 @@ In the camera driver mv_camera:
 The cpp file "modify_camera_settings" should contain the stereo camera sync code(master and slave).
 
 -----------------------------------------------------------------------
+
 ## using Stereo Image proc & Image proc
+
 Packages: Image view, Stereo image proc, Image proc
 
 After running the camera driver (mv_stereo.launch, in matrixvision_camera/mv_camera):
 
-<center>![](stereo_image_proc.png)
+<center>![](image/stereo_image_proc.png)
 
 1. rostopic list make sure the stereo camera are publishing:
    
@@ -703,7 +830,7 @@ Image_proc is for mono camera, and has 1 node: image_proc.
 
 function: remove camera distortion, convert format
 
-<center>![](image_proc.png)
+<center>![](image/image_proc.png)
 
 make sure the camera driver is running.
 
@@ -711,7 +838,9 @@ make sure the camera driver is running.
     ROS_NAMESPACE=stereo/left rosrun image_proc image_proc
     rosrun image_view image_view image:=stereo/left/image_raw
     rosrun image_view image_view image:=stereo/left/image_rect
+    
 ----------------------------------------------------------------
+
 ## Calibration for Stereo /Mono Camera 
 
 1. make sure the installation of camera_calibration             
@@ -745,6 +874,7 @@ make sure the camera driver is running.
     rosrun mv_camera stereo_time_reporter
     
 -----------------------------------------------------------
+
 ## Record dataset as bagfile for SVO
 
 In the SVO package launch folder, there are several launch files:
@@ -796,43 +926,49 @@ In the svo/src/visualOdometry.cpp  choose if dispaly the visual_feature_tracking
 
 2. set ROS_PACKAGE_PATH
 
-    cd wet      
-    source devel/setup.bash     
-    env | grep ROS      
+        cd wet      
+        source devel/setup.bash     
+        env | grep ROS      
     
     *bug solution*
      
-    unset ROS_PACKAGE_PATH      
-    remove the build folder     
-    rebuild     
+        unset ROS_PACKAGE_PATH      
+        remove the build folder     
+        rebuild     
     
     *other methods*
       
-    . workon      
-    export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/sandbox/svo/wet       
+        . workon      
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/sandbox/svo/wet       
     
-3. make     
-    catkin_make -DCMAKE_BUILD_TYPE=Release
+3. make  
+   
+        catkin_make -DCMAKE_BUILD_TYPE=Release
 
-4. roslaunch        
-    modify the launch file to fit for the bag file      
-    sandbox/svo/wet/src/svo/launch/     
-    roslaunch launch_name   
+4. roslaunch  
+      
+        modify the launch file to fit for the bag file      
+        sandbox/svo/wet/src/svo/launch/     
+        roslaunch launch_name   
         
 5. rostopic
-    rostopic list       
-    rostopic hz topic_name      
-    rostopic echo topic_name      
+
+        rostopic list       
+        rostopic hz topic_name      
+        rostopic echo topic_name      
       
 6. rosnode
-    rosbag info bag_name        
-    rosnode list        
-    rosnode info node_name      
+
+        rosbag info bag_name        
+        rosnode list        
+        rosnode info node_name      
     
 7. rosrun
-    rosrun rviz rviz -d xxx.rviz   
+
+        rosrun rviz rviz -d xxx.rviz   
     
 -------------------------------------------------
+
 ## use the CPU_monitor to get CPU usage information on Odroid
 
 1. download the package cpu_monitor and put it in the package collection folder
@@ -934,7 +1070,9 @@ http://wiki.ros.org/rosbuild/CMakeLists#rosbuild_add_link_flags
 
 ROS_LINK_FLAGS:
 http://wiki.ros.org/rosbuild
+
 ----------------------------------------------------------------------------
+
 ## Set up ROS connection between two computers through ssh
 Master <= ROS => Slave
 
@@ -962,11 +1100,121 @@ Master <= ROS => Slave
      use scy command to copy file
      
         scp source_file odroid@192.168.10.101:~/.ros/camera_info/
+
+* run launch file    
+
+    in the terminals of laptop and odroid, run launch file separately.
+    
+## Run ROS nodes on multiple machines using local launch file
+
+*in the launch file, use 'machine' tag to specify the nodes will be running on the remote machiane*    
+
+[ref](http://pharos.ece.utexas.edu/wiki/index.php/Running_ROSNodes_in_several_robots_simultaneously_using_ROSLaunch)
+
+[ref](http://wiki.ros.org/roslaunch/XML/machine)
+
+local machine: 192.168.10.100
+remote machine: 192.168.10.51
+
+*NOTE:*
+Node running on the remote machine uses the local rosparam file!
+
+
+1.in the launch file, declare the remote machine using 'machine' tag
+
+        <machine name="quad" address="192.168.10.51" env-loader="~/baseline.sh" user="quad" password="quad"/>
+
+In the node, add machine="quad" like this:
+
+        <node   machine="quad"
+                pkg="stereo_image_proc"
+                type="stereo_image_proc"
+                name="rectifier"
+                output="screen"
+                args="_approximate_sync:=true"/>
+
+2.the env-loader is the environmental file it will need to run the nodes. It should be placed in the remote machine. Create a environment file in remote machine, which set the environment variable. The remote machine can know who is the ros-master and where to find the packages.
+
+>baseline.sh
+
+        #!/usr/bin/env bash
+        
+        . /opt/ros/hydro/setup.sh
+        source /home/quad/git/sandbox/stereo_visual_odometry/dry/install_isolated/setup.bash
+        source /home/quad/git/sandbox/stereo_visual_odometry/wet/devel/setup.bash
+        
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/matrixvision_camera
+        
+        export ROS_IP=192.168.10.51
+        export ROS_HOSTNAME=${ROS_IP}
+        export ROS_MASTER_URI=http://192.168.10.100:11311
+        
+        exec "$@"
+
+3. Before roslaunch the launch file
+
+In the local machine, use
+
+    export ROSLAUNCH_SSH_UNKNOWN=1
+
+to let the roslaunch work with remote machine though it is not in the ssh-known-list.
+
+and set: 
+
+    export ROS_IP=192.168.10.100
+    export ROS_HOSTNAME=${ROS_IP}
+    export ROS_MASTER_URI=http://192.168.10.100:11311
+
+or you will get error like this:
+
+remote[192.168.10.51-0]: Exception while registering with roslaunch parent [http://arkin-Think:56780/]: Traceback (most recent call last):
+  File "/opt/ros/hydro/lib/python2.7/dist-packages/roslaunch/server.py", line 498, in _register_with_server
+    code, msg, _ = server.register(name, self.uri)
+  File "/usr/lib/python2.7/xmlrpclib.py", line 1224, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib/python2.7/xmlrpclib.py", line 1578, in __request
+    verbose=self.__verbose
+    ......
+
+We can place these items in a script: export
+
+        export ROS_IP=192.168.10.110
+        export ROS_HOSTNAME=${ROS_IP}
+        export ROS_MASTER_URI=http://192.168.10.110:11311
+        export ROSLAUNCH_SSH_UNKNOWN=1
+
+
+4. roslaunch launch-file
+
+
 -----------------------------------------------------------------   
 
-## write launch file
+## Vicon
 
-#### Vicon
+### Using Vicon_mocap package
+
+it includes:
+* vicon
+* vicon_odom
+
+after downloading by git clone, place it in the dry folder, then compile it.
+
+        catkin_make_isolated
+        catkin_make_isolated --install --pkg vicon_mocap
+
+*For the old version 'vicon' package from Github, compile vicon and vicon_odom separately by rosmake, before which you should export the directory*
+
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/sandbox/vicon_mocap/vicon
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/sandbox/vicon_mocap/vicon_odom
+ 
+*TBD* 
+
+        set -fPIC flag in libVicon_driver folder CMakelists.txt, add:
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fPIC")  
+
+### Vicon node
+
 NOTE: 
 
 the remap name from "~vicon" in "vicon_odom" must be the same with the name of topic "vicon" publishes.
@@ -997,67 +1245,218 @@ This will connect node "vicon" with node "vicon_odom".
         <remap from="~odom" to="/vicon/odom"/>
         </node>
 
+### Vicon model creation and calibration
 
+[REF](http://oryx.rasl.ri.cmu.edu/index.php?title=RASL:Infrastructure)
 
-### Using Vicon_mocap package
-it includes:
-* vicon
-* vicon_odom
+*Get the real position of the center point of the robot. This is to compensate the relative T and R between vicon-object and real robot.*
 
-after downloading by git clone, place it in the dry folder, then compile it.
-catkin_make_isolated
-catkin_make_isolated --install --pkg vicon_mocap
+1.work in cmu_quad_matlab
 
-*For the old version from Github, compile vicon and vicon_odom separately by rosmake, before which you should export the directory*
-        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/sandbox/vicon_mocap/vicon
-        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git/sandbox/vicon_mocap/vicon_odom
- 
-*TBD* 
- set -fPIC flag in libVicon_driver folder CMakelists.txt, add:
- set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fPIC")   
+2.install marks on the robot
 
-### C++ CMake
+3.creat an object named "india" in vicon system
+
+4.place robot on the calibration board with correct direction
+
+5.select "india" and "QuadrotorCalib2" in vicon system
+
+*india is the robot and QuadrotorCalib2 is the calibration board.*
+
+6.dry/src/vicon_mocap/vicon
+modify the launch/calibrate.launch, 
+model name=india
+vicon_server:192.168.10.1
+
+7.modify the conf/QuadrotorCalib.yaml as following:
+
+        markers:
+        - name: M1
+          position: [0.334964, 0.020655, -0.06959]
+        - name: M2
+          position: [0.166135, -0.157154, -0.06959]
+        - name: M3
+          position: [-0.145480, -0.208342, -0.06959]
+        - name: M4
+          position: [-0.176013, -0.125724, -0.06959]
+        - name: M6
+          position: [-0.144582, 0.241569, -0.06959]
+        - name: M7
+          position: [0.163890, 0.168380, -0.06959]
+
+*Note that the z-coordinates of the marker points represent the offset of the quadrotor's tip path plane to the calibration board's IR marker plane.*
+
+For the mini-quad calibration test stand, use:
+
+        markers:
+        - name: M1
+          position: [-0.2223,0.0178,-0.0285]
+        - name: M2
+          position: [-0.2032,-0.0686,-0.0285]
+        - name: M3
+          position: [0.0483,0.1841,-0.0285]
+        - name: M4
+          position: [0.2007,0.1829,-0.0285]
+        - name: M5
+          position: [0.0737,-0.1867,-0.0285]
+        - name: M6
+          position: [0.0930,-0.1118,-0.0285]
+        - name: M7
+          position: [0.2032,-0.1994,-0.0285]
+
+8.copy the "launch", "calib", and "conf" folders into "sandbox/cmu_quad_matlab/dry/install_isolated/share/vicon
+
+9.roslaunch vicon calibrate.launch
+
+In a new terminal:
+        rostopic list
+        #(echo)
+        /rosout
+        /rosout_agg
+        /vicon/QuadrotorCalib2
+        /vicon/QuadrotorCalibMini
+        /vicon/india
+        /vicon/lp2
+        /vicon/november
+        /vicon_calibrate/zero_pose
+        
+        rostopic echo /vicon_calibrate/zero_pose
+        #(echo)
+        nothing
+
+In a new terminal:
+
+        rosservice call /vicon_calibrate/toggle_calibration
+        
+        #Untoggle calibration routine by entering same command again
+        
+        rosservice call /vicon_calibrate/toggle_calibration
+
+10.The calibration file "india.yaml" should be written to vicon/ros/vicon/calib/india.yaml
+
+------------------------------------------------------------------------ 
+
+## C++ CMake
 
 cmake
 cmake ..
 make
 ./xxx(executable file)
 
-### Set/update time and date of Ubuntu
-* update
-        sudo ntpdate time.nist.gov 
-*other servers include time.windows.com, [here](http://www.pool.ntp.org/) lists time servers around the world.*
 
-* set
-        sudo date --set "25 Sep 2013 15:00:00"
-        sudo date 010224311971.59
-        sudo date --set="1971-01-02 24:31:59.990"  && date --rfc-3339=ns
+-------------------------------------------------------------------------        
         
-        
-### Matlab in Ubuntu
+## Matlab
 
 * set up shortcut as Windows
 
-#### slam_test_suite
+### slam_test_suite
 
 * correspondence
 
         svo/absolute_odom ==> svt
+        vicon/odom ==> vic
         
 * before use        
 1.change the topic name in the bag_interfece from line 14;      
 2.change the display options in plot_options from line 12;      
 3.change the vehicle_name in plot_options from line 2;      
 
+-------------------------------------------------------------------------  
+
+## Command about rostopic / rosmsg
+
+rostopic list
+rostopic type topic-name
+
+rosmsg show
 
 
 
 
 
+-----------------------------------
+in the launch file, for the parameter setting, it seems that we must use absolute path.
 
 
 
+##===== use matrixvision_camera from GitLab/NM/external/matrixvision_camera ======
+// in fact, the mv-driver from NM is a wrap of mv-driver from github/ethz.
+// we call them outer-driver and inner-driver.
+
+
+        arkin:~/temp$ mkdir wks
+        arkin:~/temp$ cd wks/
+        arkin:~/temp/wks$ mkdir dry
+        arkin:~/temp/wks$ cd dry/
+        arkin:~/temp/wks/dry$ wstool init  src
+        Writing /home/arkin/temp/wks/dry/src/.rosinstall
+        
+        update complete.
+        arkin:~/temp/wks/dry$ cd src/
+        arkin:~/temp/wks/dry/src$ ls
+        arkin:~/temp/wks/dry/src$ git clone git@nmichael.frc.ri.cmu.edu:external/matrixvision_camera.git
+        Cloning into 'matrixvision_camera'...
+        remote: Counting objects: 37, done.
+        remote: Compressing objects: 100% (37/37), done.
+        remote: Total 37 (delta 19), reused 0 (delta 0)
+        Receiving objects: 100% (37/37), 9.45 KiB | 0 bytes/s, done.
+        Resolving deltas: 100% (19/19), done.
+        Checking connectivity... done.
+        arkin:~/temp/wks/dry/src$ cd ..
+        arkin:~/temp/wks/dry$ catkin_make_isolated --install 
+
+// the catkin_make process will download the inner-driver from github/ethz automatically
+// and apply the patch file to it
+// the we can change something in the inner-driver
+// use rosmake to build inner-driver
+// if passed, we can create a new patch file that including the new changes.
+
+// in the github matrixvision_camera folder (very deep directory)
+// ~/ros_code/mv_ros_nm/dry/build_isolated/matrixvision_camera/matrixvision_camera-prefix/src/matrixvision_camera
+
+        //change something
+        git diff
+        git status
+        git add .
+        git add . --all
+        git rm xxxxxx
+        git commit -m ""
+        git log
+        
+        
+        // build the modified github-matrixvision_camera
+        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/github/test/matrixvision_camera/
+        rosmake
+        
+        
+        //create a new patch file
+        git format-patch -2 HEAD --stdout
+        git format-patch -2 HEAD --stdout > ../../../../../../dry/src/matrixvision_camera/config_no_driver.patch
+        
+        //if you want to rebuild (catkin_make_isolated), you must remove the old build file. Re-build, it will apply the new patch file.
+        rm -rf build devel install
+        catkin_make_isolated --install 
+
+## how to create and apply a patch file
+
+* create:
+
+        git status
+        git add .
+        git rm XXX
+        git status
+        git commit -m "note"
+        git status
+        
+        // create a patch file including 2 commit.
+
+        git format-patch -2 HEAD --stdout
+        git format-patch -2 HEAD --stdout > ../../../../../../dry/src/matrixvision_camera/config_no_driver.patch
+
+* apply:
+
+        patch -p1 < matrixvision_camera_patch_1.patch
 
 
 
