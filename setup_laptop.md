@@ -1,7 +1,7 @@
 #<center> Set up your laptop in Ubuntu
-<center><big>*Zheng Rong  @ Dec. 5 2014*</big>
+<center><big>*Zheng Rong  @ Dec. 5 2014*</big></center>
 
-<center>![text](image/logo.gif)
+<center>![text](image/logo.gif)</center>
 
 [link1](html-export.html)
 
@@ -11,6 +11,112 @@
 
         sudo apt-get update
         sudo apt-get upgrade
+        
+## System info
+
+        uname -a
+        uname -m
+        arch
+        
+## make Ubuntu OS on Odroid
+
+1. Download U2/3 Ubuntu 14.04 Trusty Dev Center 
+[UPDATED 29/08/2014](http://forum.odroid.com/viewtopic.php?f=29&t=4823)
+[older version](  http://com.odroid.com/sigong/nf_file_board/nfile_board_view.php?keyword=&tag=&bid=234)
+    
+2. Install instruction: 
+[SD card set-up for ODROID](    http://com.odroid.com/sigong/blog/blog_list.php?bid=130)
+     
+3. Copy the ubuntu from a boot-able SD to file and copy the iso file to a SD card
+
+         sudo dd if=/dev/mmcblk0 of=sd_copy.iso bs=512k
+         sudo dd if=sd_copy.iso of=/dev/mmcblk0 bs=512k
+         
+4. Odroid Wiki:
+     
+[wiki](http://odroid.com/dokuwiki/doku.php)
+ 
+5. solve the internet access problem
+
+    Internet access: nameserver problem
+    set your /etc/resolv.conf with nameserver 8.8.8.8 or your router's IP .
+    
+6. check md5sum
+
+        md5sum ubuntu-11.10-dvd-i386.iso
+        
+MD5sum:
+ 1、使用md5sum来产生指纹（报文摘要）命令如下： 
+ md5sum file > file.md5 
+ 或者 
+ md5sum file >>file.md5 
+ 也可以把多个文件的报文摘要输出到一个md5文件中，这要使用通配符*，比如某目录下有几个iso文件，要把这几个iso文件的摘要输出到iso.md5文件中，命令如下： 
+ md5sum *.iso > iso.md5
+ 
+ 2、使用md5报文摘要验证文件，方法有二： 
+ 把   下载   的文件file和该文件的file.md5报文摘要文件放在同一个目录下，然后用如下命令进行验证： 
+ md5sum -c file.md5 
+ 然后如果验证成功，则会输出:正确 
+
+文件: C:\Users\Arkin\Desktop\ubuntu-14.04.1lts-lubuntu-odroid-u-20140814.img.xz      
+大小: 1524247232 字节      
+修改时间: Monday, October 06, 2014, 2:23:43 PM      
+MD5: F0D0B3F24D3D02394CF6F61D828CCA6C      
+SHA1: 5924A62E69DC042D8F98F5D1778645D937B2E96E      
+CRC32: B7F95D64  
+
+
+## Copying an image to the SD Card in Linux (command line)
+
+    1. Download a zipped image 
+
+    2. Extract the image, with (just an example)
+        unzip ~/OdroidX_image_31-Jul-2012.zip 
+
+    3. Run df -h to see what devices are currently mounted 
+    If your computer has a slot for SD cards, insert the card. 
+Run df -h again. The device that wasn't there last time is your SD card. The left column gives the device name of your SD card. It will be listed as something like "/dev/mmcblk0p1" or "/dev/sdd1". The last part ("p1" or "1" respectively) is the partition number, but you want to write to the whole SD card, not just one partition, so you need to remove that part from the name (getting for example "/dev/mmcblk0" or "/dev/sdd") as the device for the whole SD card. Note that the SD card can show up more than once in the output of df: in fact it will if you have previously written a ODROID image to this SD card, because the ODROID SD images have more than one partition.
+    Now that you've noted what the device name is, you need to unmount it so that files can't be read or written to the SD card while you are copying over the SD image. So run the command below, replacing "/dev/sdd1" with whatever your SD card's device name is (including the partition number)
+        umount /dev/sdd1
+    Note that if you are not logged in as root you will need to prefix this with sudo
+    If your SD card shows up more than once in the output of df due to having multiple partitions on the SD card, you should unmount all of these partitions. 
+
+    4. In the terminal write the image to the card with this command, making sure you replace the input file if= argument with the path to your .img file, and the "/dev/sdd" in the output file of= argument with the right device name (this is very important: you will lose all data on the hard drive on your computer if you get the wrong device name). Make sure the device name is the name of the whole SD card as described above, not just a partition of it (for example, sdd, not sdds1 or sddp1, or mmcblk0 not mmcblk0p1)
+        dd bs=1M if=ODROID-X_31_07_2012.img of=/dev/sdd
+        
+    Note that if you are not logged in as root you will need to prefix this with sudo
+    
+    The dd command does not give any information of its progress and so may appear to have frozen. It could take more than five minutes to finish writing to the card. If your card reader has an LED it may blink during the write process, or you can run pkill -USR1 -n -x dd in another terminal (prefixed with sudo if you are not logged in as root). 
+    As root run the command sync or if a normal user run sudo sync (this will ensure the write cache is flushed and that it is safe to unmount your SD card)
+
+5. Remove SD card from card reader, insert it in the ODROID, and have fun 
+
+
+## Copying an image to the SD Card in Linux (graphical interface)
+
+If you are using Ubuntu and hesitate to use the terminal, you can use the ImageWriter tool (nice graphical user interface) to write the .img file to the SD card.
+
+    1. Download a zipped image from this link or other mirrors
+        http://com.odroid.com/sigong/nf_file_board/nfile_board.php 
+    2. Right click the zip file and select "Extract here"
+    
+        *ATTENTION: As of this writing (15 June 2012), there is a bug in the ImageWriter program that causes it to fail if the filename of the image file or its path (i.e. all the names of any parent folders that you extract the image file into) contain any space characters. Before going any further, ensure that neither the file name of the image you're using or the path contain any spaces (or other odd characters, for that matter). A bug has been opened for this issue: https://bugs.launchpad.net/usb-imagewriter/+bug/1013834 Once the issue is fixed, edit this page to advise people to use an updated/patched version of ImageWriter.*
+        
+    3. Insert the SD card into your computer or connect the SD card reader with the SD card inside
+    4. Install the ImageWriter tool from the Ubuntu Software Center. 
+    5. Launch the ImageWriter tool (it needs your administrative password)
+    6. Select the image file (example ODROID-X_31_07_2012.img) to be written to the SD card (note: because you started ImageWriter as administrator the starting point when selecting the image file is the administrator's home folder so you need to change to your own home folder to select the image file)
+    7. Select the target device to write the image to (your device will be something like "/dev/mmcblk0" or "/dev/sdc")
+    8. Click the "Write to device" button
+    9. Wait for the process to finish and then insert the SD card in the ODROID
+
+
+## Manually resizing the SD card partitions (Optional)
+    use:        
+        Gparted
+        partitionmanager
+
+
 
 --------------------------------------------
 
@@ -150,15 +256,16 @@ to
         sudo apt-get install Gparted
         sudo apt-get install partitionmanager
         sudo apt-get install retext
+        sudo apt-get install kazam
+        sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
+        sudo apt-get update && sudo apt-get install simplescreenrecorder
 
 *retext is a editor based on Markdown* 
 [how to use retex](https://github.com/LearnShare/Learning-Markdown)
 
 ----------------------------------------------
 
-## follow Ellen's note
-
-### install packages
+## install packages
 
         sudo apt-get install swig
         sudo apt-get install openjdk-7-jdk
@@ -169,6 +276,20 @@ to
         sudo apt-get install libatlas-dev
         sudo apt-get install libatlas-base-dev
         sudo apt-get install libatlas3gf-base
+        sudo apt-get install libglib2.0-dev libgtop2-dev
+        sudo apt-get install ros-indigo-tf2-ros
+        sudo apt-get install ros-indigo-pcl-conversions
+        sudo apt-get install ros-indigo-image-geometry
+        sudo apt-get install ros-indigo-cv-bridge
+        sudo apt-get install ros-indigo-pcl-ros
+        sudo apt-get install ros-indigo-camera-info-manager
+        sudo apt-get install ros-indigo-driver-base
+        
+        
+        install PCL:
+        sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
+        sudo apt-get update
+        sudo apt-get install libpcl-all
 
 <big>install Armadillo</big>
 
@@ -612,9 +733,9 @@ solution: source the directory using . workon in current terminal
 
 [Matrix Vision mvBlueFOX Ref](http://www.matrix-vision.com/manuals/mvBlueFOX/mvBF_page_quickstart.html)
 
-[Driver for odroid](http://www.matrix-vision.com/industries-reader/embedded-boards-mvbluefox-drivers-for-odroid-raspberry-pi-and-wandboard.html)
+[Driver for odroid-Linux](http://www.matrix-vision.com/industries-reader/embedded-boards-mvbluefox-drivers-for-odroid-raspberry-pi-and-wandboard.html)
 
-[Driver for Linux](http://www.matrix-vision.com/latest-drivers.html)
+[Driver for PC-Linux](http://www.matrix-vision.com/latest-drivers.html)
 
 #### install [expat-2.1.0](http://sourceforge.net/projects/expat/)
     
@@ -633,6 +754,8 @@ solution: source the directory using . workon in current terminal
 download 2 files and run the following command:
         chmod a+x install_mvBlueFOX.sh 
         ./install_mvBlueFOX.sh 
+        
+        OR:  sudo ./install_mvBlueFox -p /opt/mvIMPACT_acquire/
 
 #### test using wxPropView
 reboot  
@@ -804,7 +927,7 @@ Packages: Image view, Stereo image proc, Image proc
 
 After running the camera driver (mv_stereo.launch, in matrixvision_camera/mv_camera):
 
-<center>![](image/stereo_image_proc.png)
+<center>![](image/stereo_image_proc.png)</center>
 
 1. rostopic list make sure the stereo camera are publishing:
    
@@ -833,6 +956,8 @@ function: remove camera distortion, convert format
 <center>![](image/image_proc.png)
 
 make sure the camera driver is running.
+
+    ROS_NAMESPACE=/mono/ rosrun image_proc image_proc
 
     rostopic list | grep image_raw
     ROS_NAMESPACE=stereo/left rosrun image_proc image_proc
@@ -1288,21 +1413,21 @@ vicon_server:192.168.10.1
 
 For the mini-quad calibration test stand, use:
 
-        markers:
-        - name: M1
-          position: [-0.2223,0.0178,-0.0285]
-        - name: M2
-          position: [-0.2032,-0.0686,-0.0285]
-        - name: M3
-          position: [0.0483,0.1841,-0.0285]
-        - name: M4
-          position: [0.2007,0.1829,-0.0285]
-        - name: M5
-          position: [0.0737,-0.1867,-0.0285]
-        - name: M6
-          position: [0.0930,-0.1118,-0.0285]
-        - name: M7
-          position: [0.2032,-0.1994,-0.0285]
+markers:
+- name: M1
+  position: [-0.2223,0.0178,-0.0285]
+- name: M2
+  position: [-0.2032,-0.0686,-0.0285]
+- name: M3
+  position: [0.0483,0.1841,-0.0285]
+- name: M4
+  position: [0.2007,0.1829,-0.0285]
+- name: M5
+  position: [0.0737,-0.1867,-0.0285]
+- name: M6
+  position: [0.0930,-0.1118,-0.0285]
+- name: M7
+  position: [0.2032,-0.1994,-0.0285]
 
 8.copy the "launch", "calib", and "conf" folders into "sandbox/cmu_quad_matlab/dry/install_isolated/share/vicon
 
@@ -1458,13 +1583,72 @@ in the launch file, for the parameter setting, it seems that we must use absolut
 
         patch -p1 < matrixvision_camera_patch_1.patch
 
+## use the screen command ===
+
+ref: http://www.tecmint.com/screen-command-examples-to-manage-linux-terminals/
+
+screen 
+ctrl-A+d 	detach current screen
+ctrl-A+n 	next screen
+ctrl-A+p 	previous screen
+screen -r 	re-attach
+screen -ls
+screen -r 7849
+ctrl-A+H 	log the commands
+screen -L
+ctrl-A+x 	lock the screen
+
+
+## ESC32
+
+git clone git@nmichael.frc.ri.cmu.edu:quadrotor/esc32.git
+cd esc32/onboard/
+make
+arm-none-eabi-objcopy -O ihex obj/ESC32.elf ESC32.hex
+cd ../ground/
+make
+
+To upload (assuming the connection in on ttyUSB0): 
+./loader -p /dev/ttyUSB0 -f ../onboard/ESC32.hex 
+
+To test (will spin up motor):
+
+./esc32Cal -p /dev/ttyUSB0 --r2v
+
+## router
+
+192.168.10.2
+admin
+newton13
+
+## install openCV
+Building OpenCV from Source Using CMake, Using the Command Line
+
+    Create a temporary directory, which we denote as <cmake_binary_dir>, where you want to put the generated Makefiles, project files as well the object files and output binaries.
+
+    Enter the <cmake_binary_dir> and type
+
+    cmake [<some optional parameters>] <path to the OpenCV source directory>
+
+    For example
+
+    cd ~/opencv
+    mkdir release
+    cd release
+    cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+
+    Enter the created temporary directory (<cmake_binary_dir>) and proceed with:
+
+    make
+    sudo make install
+    
+## gtsam
 
 
 
-
-
-
-
+## rosservice
+example:
+        rosservice call /mavlink/motors true
 
 
 

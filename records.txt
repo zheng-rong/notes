@@ -168,35 +168,15 @@ we
 ============================================
 =========== TO DO ==========================
 ============================================
-V--px4 flashing&boot
-V--write a node
-V--sync the gpio-time and image
-V--set up trigger for india
-V--time align namespace problem
-V--image flip
 
-move to matrixvision_camera from NM and patch
-follow the new branch of svo & understand
 occupancy grid dense map
 read paper about OM
-patch matrixvision_camera
 test new svo on india (efficiency)
 test new svo on mini-quad-odroid
-evaluate the new camera driver
 
-
-=== how to use gpio_trigger ===
-update cmu_mavlink branch
-update quadrotor_msgs branch
-add node in mv_camera
-modify the following files
-	modify_camera_settings
-	CMakeList.txt
 
 in big quad, notice the launchfile/mavlink/ttyUSB. It should be correspond to the hardware serial port of CPU.
 
-
-87mins lost 34 frames in gpio-trigger test on odroid
 
 //============== reading notes =============
 
@@ -218,52 +198,7 @@ http://spectrum.ieee.org/automaton/robotics/robotics-hardware/dynamic-vision-sen
 http://www.inilabs.com/products/dynamic-vision-sensors
 
 
-//============= use mv_driver =========
 
-arkin:~/temp$ mkdir wks
-arkin:~/temp$ cd wks/
-arkin:~/temp/wks$ mkdir dry
-arkin:~/temp/wks$ cd dry/
-arkin:~/temp/wks/dry$ wstool init  src
-Writing /home/arkin/temp/wks/dry/src/.rosinstall
-
-update complete.
-arkin:~/temp/wks/dry$ cd src/
-arkin:~/temp/wks/dry/src$ ls
-arkin:~/temp/wks/dry/src$ git clone git@nmichael.frc.ri.cmu.edu:external/matrixvision_camera.git
-Cloning into 'matrixvision_camera'...
-remote: Counting objects: 37, done.
-remote: Compressing objects: 100% (37/37), done.
-remote: Total 37 (delta 19), reused 0 (delta 0)
-Receiving objects: 100% (37/37), 9.45 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (19/19), done.
-Checking connectivity... done.
-arkin:~/temp/wks/dry/src$ cd ..
-arkin:~/temp/wks/dry$ catkin_make_isolated --install 
-
-// in the github matrixvision_camera folder (very deep directory)
-change something
-git diff
-git status
-git add .
-git add . --all
-git rm xxxxxx
-git commit -m ""
-git log
-
-
-// build the modified github-matrixvision_camera
-export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/github/test/matrixvision_camera/
-rosmake
-
-
-//create a new patch file
-git format-patch -2 HEAD --stdout
-git format-patch -2 HEAD --stdout > ../../../../../../dry/src/matrixvision_camera/config_no_driver.patch
-
-//if you want to rebuild (catkin_make_isolated), you must remove the old build file. Re-build, it will apply the new patch file.
-rm -rf build devel install
-catkin_make_isolated --install 
 
 
 //============= Git command ===============
@@ -271,13 +206,16 @@ catkin_make_isolated --install
 unset ROS_PACKAGE_PATH 
 export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/github/test/matrixvision_camera/
 
-patch -p1 < ../matrixvision_camera_patch_1.patch
 
-git init
-git add .
-git commit
-git remote add origin https://github.com/zheng-rong/name.git
-git remote -v
 
-git remote rm origin
-git remote -v
+//========= quaternion multiplication ===
+http://www.cprogramming.com/tutorial/3d/quaternions.html
+http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
+
+//=== quaternion derivative ===
+http://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions#Quaternion_.E2.86.94_angular_velocities
+
+mvBlueFOX Technical Documentation
+
+
+
