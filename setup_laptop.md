@@ -143,6 +143,10 @@ some setup for Ubuntu
 
 ## Set/update time and date
 
+* change time zone
+
+        sudo dpkg-reconfigure tzdata
+
 * update with Internet
 
         sudo ntpdate time.nist.gov 
