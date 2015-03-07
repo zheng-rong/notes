@@ -191,11 +191,70 @@ to
     
 ----------------------------------------------
 
-## install logitech unifying
+## use GPU
 
-        sudo add-apt-repository ppa:daniel.pavel/solaar
-        sudo apt-get update
-        sudo apt-get install solaar
+install nvidia driver
+
+Download the Cuda kit 6.5 from http://developer.nvidia.com/cuda-downloads -> Linux x86 -> Ubuntu 14.04, x86_64-bit, deb
+
+sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
+
+sudo apt-get update
+
+sudo apt-get install cuda
+
+reboot
+
+* Download the drivers from the NVIDIA website into a directory (for instance /tmp)
+* Press ctrl-alt-F1, a text login screen will appear
+* login as root
+* type "init 3" to stop the X server
+* type "sh NVIDIA....pkg.run" to install the driver from the directory where you had downloaded it
+* answer yes to all questions from the installer
+* type "init 5"
+* press "ctrl-alt-F7" to get back to X Windows
+
+
+
+Installation
+Uninstall the previously installed version of Nvidia graphics driver (if any).
+
+sudo apt-get purge nvidia*
+
+End the graphic session with the appropriate command from the list of commands given below:
+
+* For Ubuntu LightDM [DEFAULT]
+sudo service lightdm stop
+
+* For Gnome GDM
+sudo service gdm stop
+
+* For Linux Mint MDM
+sudo service mdm stop
+
+Download the appropriate driver from the source. Here are the download links:
+
+    Nvidia 337.12 for 32 bit Linux
+    Nvidia 337.12 for 64 bit Linux
+
+ Make the installer file executable.
+
+chmod 777 ~/Downloads/NVIDIA-Linux-*-337.12.run
+
+
+Run the executable installer file.
+
+sudo sh ~/Downloads/NVIDIA-Linux-*-337.12.run
+
+
+This will start the installation process. Follow the on-screen instructions to complete the process.
+
+Note : Do not delete the installer file. It will be needed while removing/uninstalling the Nvidia 337.12 driver if it fails to work properly.
+
+To uninstall,
+
+sudo sh ~/Downloads/NVIDIA-Linux-*-337.12.run --uninstall
+
 
 ----------------------------------------------
 
@@ -250,7 +309,22 @@ to
  
         sudo apt-get install tex-live
         sudo apt-get install tex-maker
+        
+        sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+        sudo apt-get update 
         sudo apt-get install skype
+
+        sudo add-apt-repository ppa:daniel.pavel/solaar
+        sudo apt-get update
+        sudo apt-get install solaar
+        
+        *install system monitor*
+        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+        sudo apt-get update
+        sudo apt-get install indicator-sysmonitor
+        sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
+        sudo apt-get install indicator-multiload
+        
         sudo apt-get install dropbox
         sudo apt-get install everpad
         sudo apt-get install Gparted
@@ -421,15 +495,6 @@ change the Host and Queue fields. Queue is the name of the printer.
     NSH 1509 (near NSH 1st floor copy room and RoboLounge)
     cyan.srv.cs.cmu.edu
 
-----------------------------------------------
-
-## install system monitor
-
-        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
-        sudo apt-get update
-        sudo apt-get install indicator-sysmonitor
-        sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
-        sudo apt-get install indicator-multiload
  
  ----------------------------------------------
     
