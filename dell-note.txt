@@ -1,0 +1,28 @@
+sudo service lightdm stop
+sudo service lightdm start
+
+log in 
+sudo service lightdm stop
+chmod a+x driver_file_run
+./nvidia_driver_346.47
+sudo service lightdm start
+
+sudo apt-get remove --purge nvidia*
+sudo apt-get autoclean
+sudo apt-get autoremove
+
+sudo dpkg -i cuda-repo.deb
+sudo apt-get update
+sudo service lightdm stop
+sudo sh cuda.run
+
+sudo apt-get update
+sudo apt-get install aptitude
+sudo aptitude reinstall lightdm
+sudo aptitude install gdm
+
+sudo dpkg-reconfigure dgm
+sudo dpkg-reconfigure xserver-xorg
+
+
+
