@@ -16,4 +16,13 @@ sudo apt-get update
 sudo service lightdm stop
 sudo sh cuda.run
 
+sudo apt-get update
+sudo apt-get install aptitude
+sudo aptitude reinstall lightdm
+sudo aptitude install gdm
+
+sudo dpkg-reconfigure dgm
+sudo dpkg-reconfigure xserver-xorg
+
+
 
