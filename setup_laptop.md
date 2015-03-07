@@ -195,11 +195,51 @@ to
     
 ----------------------------------------------
 
-## install logitech unifying
 
-        sudo add-apt-repository ppa:daniel.pavel/solaar
-        sudo apt-get update
-        sudo apt-get install solaar
+        
+## use GPU
+
+-install nvidia driver
+-
+-Download the Cuda kit 6.5 from http://developer.nvidia.com/cuda-downloads -> Linux x86 -> Ubuntu 14.04, x86_64-bit, deb
+-
+-sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
+-
+-sudo apt-get update
+-
+-sudo apt-get install cuda
+-
+-reboot
+-
+-* Download the drivers from the NVIDIA website into a directory (for instance /tmp)
+-* Press ctrl-alt-F1, a text login screen will appear
+-* login as root
+-* type "init 3" to stop the X server
+-* type "sh NVIDIA....pkg.run" to install the driver from the directory where you had downloaded it
+-* answer yes to all questions from the installer
+-* type "init 5"
+-* press "ctrl-alt-F7" to get back to X Windows
+-
+-
+-
+-Installation
+-Uninstall the previously installed version of Nvidia graphics driver (if any).
+-
+-sudo apt-get purge nvidia*
+-
+-End the graphic session with the appropriate command from the list of commands given below:
+-
+-* For Ubuntu LightDM [DEFAULT]
+-sudo service lightdm stop
+-
+-* For Gnome GDM
+-sudo service gdm stop
+-
+-* For Linux Mint MDM
+-sudo service mdm stop
+
+-To uninstall,
+-sudo sh ~/Downloads/NVIDIA-Linux-*-337.12.run --uninstall
 
 ----------------------------------------------
 
@@ -242,15 +282,23 @@ to
         
 ----------------------------------------------
 
-## install sublime-text-3 
 
-        sudo add-apt-repository ppa:webupd8team/sublime-text-3
-        sudo apt-get update
-        sudo apt-get install sublime-text-installer
 
 ----------------------------------------------
 
 ## install others   
+
+        *install logitech unifying*
+
+        sudo add-apt-repository ppa:daniel.pavel/solaar
+        sudo apt-get update
+        sudo apt-get install solaar
+        
+        *install sublime-text-3*
+
+        sudo add-apt-repository ppa:webupd8team/sublime-text-3
+        sudo apt-get update
+        sudo apt-get install sublime-text-installer
  
         sudo apt-get install tex-live
         sudo apt-get install tex-maker
@@ -263,6 +311,29 @@ to
         sudo apt-get install kazam
         sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
         sudo apt-get update && sudo apt-get install simplescreenrecorder
+        
+        sudo apt-get install tex-live
+        sudo apt-get install tex-live
+        sudo apt-get install tex-maker
+        sudo apt-get install tex-maker
+        
+        sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+        sudo apt-get update
+        sudo apt-get install skype
+        
+        sudo add-apt-repository ppa:daniel.pavel/solaar
+        sudo apt-get update
+        sudo apt-get install solaar
+        
+        *install system monitor*
+        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+        sudo apt-get update
+        sudo apt-get install indicator-sysmonitor
+        sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
+        sudo apt-get install indicator-multiload
+        
+        sudo apt-get install dropbox
+        sudo apt-get install everpad
 
 *retext is a editor based on Markdown* 
 [how to use retex](https://github.com/LearnShare/Learning-Markdown)
