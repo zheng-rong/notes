@@ -597,6 +597,7 @@ change the Host and Queue fields. Queue is the name of the printer.
         git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_rc_command.git src/modules/cmu_rc_command
         git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_voltage_monitor.git src/modules/cmu_voltage_monitor
         git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_attitude_estimator_so3.git src/modules/cmu_attitude_estimator_so3
+        git submodule add git@nmichael.frc.ri.cmu.edu:px4/cmu_gpio_trigger.git src/modules/cmu_gpio_trigger
         git clone https://github.com/PX4/NuttX
     *GitLab special end*
     
@@ -643,6 +644,19 @@ When you see “waiting for the bootloader” press the “reset” button on th
 gcc-arm-none-eabi version is too high, not supported.
 This will cause make error;
 Sometime though the building pass, but after the flashing operation, the px4 can NOT boot correctly.
+use version 4.7
+
+GCC 4.7
+
+pushd .
+cd ~
+wget https://launchpadlibrarian.net/174121628/gcc-arm-none-eabi-4_7-2014q2-20140408-linux.tar.bz2
+tar -jxf gcc-arm-none-eabi-4_7-2014q2-20140408-linux.tar.bz2
+exportline="export PATH=$HOME/gcc-arm-none-eabi-4_7-2014q2/bin:\$PATH"
+if grep -Fxq "$exportline" ~/.bashrc; then echo nothing to do ; else echo $exportline >> ~/.bashrc; fi
+. ~/.bashrc
+popd
+
 
 ####Board not found (Affects mostly Ubuntu 12.10 users) 
 In case the board is not found, make sure you remove the modem-manager by:  
@@ -1724,6 +1738,12 @@ example:
         rosservice call /mavlink/motors true
 
 
+git init
+git add -A
+git remote add origin git@nmichael.frc.ri.cmu.edu:zheng.rong/mono_visual_odometry.git
+git push -u origin master
+
+git branch -d the_local_branch
 
 
 
