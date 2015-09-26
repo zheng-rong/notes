@@ -7,6 +7,70 @@
 
 ---------------------------------------------
 
+## DELL trouble shooting
+
+### install NVIDIA driver
+
+ctrl+Alt+F3
+log in
+sudo service lightdm stop #stop X server
+sudo init 3 #runlevel=3
+chmod a+x driver_file_run
+sudo ./driver_file_run
+sudo service lightdm start
+
+### remove NVIDIA driver
+
+sudo apt-get remove --purge nvidia*
+sudo apt-get autoclean
+sudo apt-get autoremove
+
+### install CUDA
+
+sudo dpkg -i cuda-repo.deb
+sudo apt-get update
+sudo apt-get install cuda
+
+### lightdm & gdm
+
+sudo apt-get update
+sudo apt-get install aptitude
+sudo aptitude reinstall lightdm
+sudo aptitude install gdm
+sudo dpkg-reconfigure gdm
+sudo dpkg-reconfigure xserver-xorg
+
+### Reinstall Ubuntu's default desktop Unity in Ubuntu 14.04 to fix system freeze issue
+
+Ctrl+Alt+F2
+sudo apt-get update
+sudo apt-get install --reinstall ubuntu-desktop
+sudo apt-get install unity
+sudo apt-get remove --purge nvidia*
+sudo shutdown -r now
+Once you have Unity back to normal at next reboot, just reinstall the Nvidia drivers.
+
+### Install different greeter
+
+sudo apt-get install lightdm-gtk-greeter
+sudo apt-get install lightdm-kde-greeter
+
+Next, you need to tell lightdm desktop manager which greeter to choose on boot. 
+
+sudo nano /etc/lightdm/lightdm.conf
+
+this config file will be blank, so you would need to add the following lines:
+
+[SeatDefaults] greeter-session=lightdm-gtk-greeter
+
+where lightdm-gtk-greeter , would be the name of the greeter you installed. 
+
+### Install different desktop
+
+To select different default desktop environment you can edit /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf file. 
+
+-----------------------------------------------------
+
 ## install Ubuntu
 
         sudo apt-get update
@@ -111,12 +175,6 @@ If you are using Ubuntu and hesitate to use the terminal, you can use the ImageW
     9. Wait for the process to finish and then insert the SD card in the ODROID
 
 
-## Manually resizing the SD card partitions (Optional)
-    use:        
-        Gparted
-        partitionmanager
-
-
 
 --------------------------------------------
 
@@ -185,14 +243,6 @@ To save that list to a text file
  
 [using the attached file](dot-bashrc)
 
-    gedit ~/.bashrc   
-    
->uncomment the line     
-from  
-    #force_color_prompt=yes     
-to  
-    force_color_prompt=yes
-    
 ----------------------------------------------
         
 ## use GPU
@@ -252,35 +302,11 @@ to
         
 *set up the vim*   
 
-* create (or edit) the .vimrc file:   
+* configure the .vimrc file:   
 
         vim ~/.vimrc    
         
-* paste the configuration below into the file.   
-
-        set tabstop=4       " The width of a TAB is set to 4.
-                            " Still it is a \t. It is just that
-                            " Vim will interpret it to be having
-                            " a width of 4.
-        set shiftwidth=4    " Indents will have a width of 4
-        set softtabstop=4   " Sets the number of columns for a TAB
-        set expandtab       " Expand TABs to spaces
-        " set nu
-        syntax on
-        set autoindent      " auto indent
-    
-* restart vim
-
-----------------------------------------------
-
-## install adobe reader
-
-        acrobat adobe reader
-        ardownload.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
-        
-----------------------------------------------
-
-
+        set mouse=a
 
 ----------------------------------------------
 
@@ -297,41 +323,36 @@ to
         sudo add-apt-repository ppa:webupd8team/sublime-text-3
         sudo apt-get update
         sudo apt-get install sublime-text-installer
- 
+        
+        *install simplescreenrecorder*
+        
+        sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
+        sudo apt-get update 
+        sudo apt-get install simplescreenrecorder
+
+        *install skype*
+        
+        sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+        sudo apt-get update
+        sudo apt-get install skype
+        
+        *install system monitor*
+        
+        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+        sudo apt-get update
+        sudo apt-get install indicator-sysmonitor
+        sudo apt-get remove indicator-sysmonitor
+        sudo apt-get install indicator-multiload
+        
         sudo apt-get install tex-live
         sudo apt-get install tex-maker
-        sudo apt-get install skype
         sudo apt-get install dropbox
         sudo apt-get install everpad
         sudo apt-get install Gparted
         sudo apt-get install partitionmanager
         sudo apt-get install retext
         sudo apt-get install kazam
-        sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
-        sudo apt-get update && sudo apt-get install simplescreenrecorder
-        
-        sudo apt-get install tex-live
-        sudo apt-get install tex-live
-        sudo apt-get install tex-maker
-        sudo apt-get install tex-maker
-        
-        sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-        sudo apt-get update
-        sudo apt-get install skype
-        
-        sudo add-apt-repository ppa:daniel.pavel/solaar
-        sudo apt-get update
-        sudo apt-get install solaar
-        
-        *install system monitor*
-        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
-        sudo apt-get update
-        sudo apt-get install indicator-sysmonitor
-        sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
-        sudo apt-get install indicator-multiload
-        
-        sudo apt-get install dropbox
-        sudo apt-get install everpad
+ 
 
 *retext is a editor based on Markdown* 
 [how to use retex](https://github.com/LearnShare/Learning-Markdown)
@@ -350,21 +371,14 @@ to
         sudo apt-get install libatlas-base-dev
         sudo apt-get install libatlas3gf-base
         sudo apt-get install libglib2.0-dev libgtop2-dev
-        sudo apt-get install ros-indigo-tf2-ros
-        sudo apt-get install ros-indigo-pcl-conversions
-        sudo apt-get install ros-indigo-image-geometry
-        sudo apt-get install ros-indigo-cv-bridge
-        sudo apt-get install ros-indigo-pcl-ros
-        sudo apt-get install ros-indigo-camera-info-manager
-        sudo apt-get install ros-indigo-driver-base
-        
+
         
         install PCL:
         sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
         sudo apt-get update
         sudo apt-get install libpcl-all
 
-<big>install Armadillo</big>
+## install Armadillo
 
 …by downloading it from the website, not via apt-get, and follow the instructions in the readme. Make sure to do all the –devs and parallel stuff it mentions.
 
@@ -465,7 +479,7 @@ Expand 'Network Printer'
 Select 'LPD/LPR Host or Printer'       
 change the Host and Queue fields. Queue is the name of the printer.
    
-####Printer IP	FQDN	Model	Location 	Host 
+####Printer  IP	 FQDN	Model	Location 	Host 
     
     boulder	
     128.2.177.195	
@@ -494,15 +508,7 @@ change the Host and Queue fields. Queue is the name of the printer.
     NSH 1509 (near NSH 1st floor copy room and RoboLounge)
     cyan.srv.cs.cmu.edu
 
-----------------------------------------------
-
-## install system monitor
-
-        sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
-        sudo apt-get update
-        sudo apt-get install indicator-sysmonitor
-        sudo apt-get remove indicator-sysmonitor # to remove indicator sysmonitor
-        sudo apt-get install indicator-multiload
+---------------------------------------------
  
  ----------------------------------------------
     
@@ -549,6 +555,16 @@ change the Host and Queue fields. Queue is the name of the printer.
         
         git remote rm origin
         git remote -v
+        
+        git fetch
+        git branch
+        git diff
+        git stash
+        git branch -r
+        git checkout -b your_branch_name tracked_branch_name
+        git stash pop
+        git log
+        git pull
     
  
  --------------------------------------------------------
@@ -635,7 +651,15 @@ When you see “waiting for the bootloader” press the “reset” button on th
         erase...    
         program...  
         verify...   
-        done, rebooting.    
+        done, rebooting. 
+        
+        
+Using Firmware from KSS:
+
+git submodule init
+git submodule sync
+make archives
+make upload px4fmu-v1_default
 
 ### Troubleshooting 
 
@@ -772,7 +796,7 @@ https://pixhawk.org/firmware/apps/tests
     
 ### compile the packages
 solve the problem in vicon-mocap        
-goto: cmu-quad-matlab/dry/src/vicon_mocap/libvicon_driver/
+goto: cmu-quad-matlab/dry/src/vicon_mocap/libvicon_driver/CMakeList.txt
 
 Change the line 24:
 
@@ -855,137 +879,8 @@ test using
 1. git clone matrixvision_camera from ethz Github
     export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/
 2. rosmake
-3. add files and modify some code from Ke's matrixvision Gitlab
-4. rosmake
-5. modify the launch file in mv_camera (camera ID)
-6. roslaunch launchfile-name
-7. rostopic list make sure the stereo camera are publishing:
-    
-        /stereo/left/image_raw
-        /stereo/left/camera_info
-        /stereo/right/image_raw
-        /stereo/right/camera_info
+   
 
-8. rostopic hz topic-name
-9. rosrun image_view image_view image:=/stereo/left/image_raw
-
->Difference between Ke and ethz:
-1. copy from Ke to ethz:
-    mv_camera/  
-    {  
-        CMakeLists.txt  
-        launch  
-        Makefile    
-        manifest.xml    
-    }   
-    mv_camera/src   
-    {   
-        modify_camera_settings.cpp  
-        stereo_time_reporter.cpp  
-    }     
-2. comment some code:
-    mv_camera/src/modify_camera_settings.cpp    
-    comment the last 4 sessions(set master and slave mode)
-
-copy camera calibration file
-test image_view
-test stereo_view
-
-##Install ROS-camera driver on Odroid
-
-Before this step, we should install mvBlueFOX driver firstly. 
-  
-1. git clone matrixvision_camera from ethz Github
-        export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/ros_code/matrixvision_camera/     
-2. modify the make.sh file in the mv_driver folder   ---Arkin   see attached    
-3. copy 4 folder from mv_driver/mvIMPACT_acquire to /opt/ros/indigo/include 
-    DriverBase, mvDeviceManager, mvIMPACT_CPP, mvPropHandling
-        sudo cp -r source-directory dest-directory  
-*Note: the folder mv_driver/mvIMPACT_acquire will not exist until we rosmake it in directory matrixviaion_camera, but this rosmake will have some error.*   
-4. rosmake it again, then it passed.    
-5. modify the code according to Ke's code component 
-6. rosmake  
-7. install ros-indigo-image-view package    
-8. modify the launch file in the mv_camera for the two cameras UID  
-9. roslaunch launchfile     
-10. rostopic list       
-11. rosrun image_view image_view image:=/stereo/left/image_raw  
-
->Difference between Ke and ethz:
-1. copy from Ke to ethz:
-    mv_camera/  
-    {  
-        CMakeLists.txt  
-        launch  
-        Makefile    
-        manifest.xml    
-    }   
-    mv_camera/src   
-    {   
-        modify_camera_settings.cpp  
-        stereo_time_reporter.cpp  
-    }     
-2. comment some code:
-    mv_camera/src/modify_camera_settings.cpp    
-    comment the last 4 sessions(set master and slave mode)
-    
-*make.sh*    
-
-        #!/bin/bash   
-        #This make.sh is for Odroid armv7l. Zheng Rong Nov 10 2014
-        
-        set -e
-        
-        PACKAGE_DIR=$(rospack find mv_driver)
-        echo "### downloading and unpacking drivers to" $PACKAGE_DIR "###"
-        
-        BLUEFOX_URL="http://www.matrix-vision.com/industries-reader/embedded-boards-mvbluefox-drivers-for-odroid-raspberry-pi-and-wandboard.html?file=tl_files/mv11/support/mvIMPACT_Acquire_Embedded"
-        
-        API=mvIMPACT_acquire
-        
-        LINKER_PATHS=$PACKAGE_DIR/linker_paths
-        COMPILER_FLAGS=$PACKAGE_DIR/compile_flags
-        
-        BLUEFOX_NAME=mvBlueFOX
-        TARGET=armv7l
-        BLUEFOX_VERSION=2.6.3
-        BLUEFOX_TARNAME=$BLUEFOX_NAME-$TARGET-$BLUEFOX_VERSION
-        
-        # cleanup first
-        rm -rf $BLUEFOX_NAME* $API* tmp $LINKER_PATHS $COMPILER_FLAGS
-        rm -rf download
-        #### download driver archives ####
-        mkdir -p download
-        cd download
-        wget -O $BLUEFOX_TARNAME.tgz -nc $BLUEFOX_URL/$BLUEFOX_TARNAME.tgz
-        
-        #### bluefox runtime ####
-        # unpack
-        mkdir -p $PACKAGE_DIR/tmp/$BLUEFOX_NAME
-        cd $PACKAGE_DIR/tmp/$BLUEFOX_NAME
-        tar -xf $PACKAGE_DIR/download/$BLUEFOX_TARNAME.tgz --overwrite
-        
-        # copy blueFOX runtime libs
-        mkdir -p $PACKAGE_DIR/$BLUEFOX_NAME"_runtime/lib/"$TARGET
-        cp $PACKAGE_DIR/tmp/$BLUEFOX_NAME/$API-$TARGET-$BLUEFOX_VERSION/lib/$TARGET/libmvBlueFOX.* $PACKAGE_DIR/$BLUEFOX_NAME"_runtime/lib/"$TARGET
-        
-        # copy udev rule
-        mkdir -p $PACKAGE_DIR/$BLUEFOX_NAME"_scripts"
-        cp $PACKAGE_DIR/tmp/$BLUEFOX_NAME/$API-$TARGET-$BLUEFOX_VERSION/Scripts/51-mvbf.rules $PACKAGE_DIR/$BLUEFOX_NAME"_scripts"
-        
-        echo -L$PACKAGE_DIR/$BLUEFOX_NAME"_runtime/lib/"$TARGET >> $LINKER_PATHS
-        
-        ##### mvIMPACT (device independent stuff) #####===============  Arkin --Nov 11 2014
-        cd $PACKAGE_DIR
-        mv $PACKAGE_DIR/tmp/$BLUEFOX_NAME/$API-$TARGET-$BLUEFOX_VERSION $PACKAGE_DIR/$API
-        echo -L$PACKAGE_DIR/$API/lib/$TARGET >> $LINKER_PATHS
-        echo -I$PACKAGE_DIR/$API >> $COMPILER_FLAGS
-            
-        #### clean up ####
-        rm -rf $PACKAGE_DIR/tmp
-        
-        #### note down that this is done ####
-        touch $PACKAGE_DIR/downloadandinstall
 
 -----------------------------------------------------------------------
 ## Sychronization of the stereo camera
@@ -1744,6 +1639,139 @@ git remote add origin git@nmichael.frc.ri.cmu.edu:zheng.rong/mono_visual_odometr
 git push -u origin master
 
 git branch -d the_local_branch
+
+## USE VIM
+
+hljk
+(){}
+we
+
+:e filename      - edit another file
+ :split filename  - split window and load another file
+ ctrl-w up arrow  - move cursor up a window
+ ctrl-w ctrl-w    - move cursor to another window (cycle)
+ ctrl-w_          - maximize current window
+ ctrl-w=          - make all equal size
+ 10 ctrl-w+       - increase window size by 10 lines
+ :vsplit file     - vertical split
+ :sview file      - same as split, but readonly
+ :hide            - close current window
+ :only            - keep only this window open
+ :ls              - show current buffers
+ :b 2             - open buffer #2 in this window
+
+
+select a line: shift+v
+copy: y
+paste after: p
+paste before: shift+p
+
+visual block: ctrl+v
+select column: arrow
+insert a column: shift+i 
+type the charaters
+apply the column edition: esc
+
+vertically split a window: vsp + file name
+vertically split a window: vsp + directory
+
+go to a certain line: linenumber+gg
+
+find in directory: :tabfind ./
+
+## Envirenment setting
+
+### Attention:
+
+1.  install BLAS and LAPACK as ceres
+    install superLU
+    sudo apt-get install libsuperlu3 libsuperlu3-dev
+    install SCOTCH
+    sudo apt-get install libscotch-5.1 libscotch-dev
+    install METIS
+    sudo apt-get install libmetis-dev libmetis-doc
+    install fortran compiler
+    sudo apt-get install gfortran
+    install ADOLC
+    sudo apt-get install libadolc-dev
+    install MPFR
+    sudo apt-get install libmpfr-dev libmpfr-doc libmpfrc++-dev
+    install GMP
+    sudo apt-get install libgmp-dev libgmp10 libgmp10-doc
+    install FFTW
+    sudo apt-get install libfftw3-bin libfftw3-dev libfftw3-doc 
+    sudo apt-get install libfftw3-double3 libfftw3-long3 libfftw3-quad3 libfftw3-single3
+    sudo apt-get install pkg-config
+    install google sparse hash
+    install GeographicLib (easy)
+    install SuperLU-4.3 (carefully)
+    install Armadillo (carefully)
+    install glibtop   
+    sudo apt-get install libglib2.0-dev libgtop2-dev
+    install GSL
+    sudo apt-get install libgsl0-dev
+    install pip
+    sudo apt-get -y install python-pip
+    pip --help
+    pip -V
+    install Sphinx used for documentation
+    pip install -U Sphinx
+    install expat for camera driver
+   
+2. eigen 
+	install in /usr, and in /usr/local
+	because pkgs in mvo-sandbox need these two pathes.
+
+3. ceres
+	download using git clone the latest version
+	create the shared lib
+	install in /usr/local
+
+### Software list 
+
+Baisc
+	ROS
+	Matlab
+	matlab_rosbag
+	OpenCV
+
+Linear Algebra
+	eigen
+	atlas (blas + lapack)
+	suitesparse
+	ceres
+
+Camera tools
+	OcamCalib
+	OmniCalib
+	kalibra
+
+Research
+	camera_matrix
+	launch_button
+	mvo_sandbox
+	svo_sandbox
+	mono_vins_matlab
+
+	px4_calibration
+	px4_firmware
+	esc_firmware
+
+Office
+	TexStudio
+	subslime
+	terminator
+	retext
+	thunderbird
+	simpleScreenRecorder
+	
+## IP setting
+
+Arkin-TP    	60-D8-19-CC-A0-34	192.168.10.36		
+Arkin-DELL	d8-fc-93-61-c3-df	192.168.10.37		
+Arkin-U3		80-1F-02-F9-0F-F1	192.168.10.96
+Arkin-XU3	74-DA-38-26-14-92	192.168.10.97		
+
 
 
 
